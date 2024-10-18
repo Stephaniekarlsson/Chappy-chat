@@ -7,3 +7,9 @@ export interface UserModel {
     image: string;
     date_of_creation: number;
     }
+
+export interface EditUserModel {
+    username: string;
+    password: string;
+    image: string;
+}

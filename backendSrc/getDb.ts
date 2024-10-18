@@ -26,4 +26,10 @@ async function getUsers(): Promise<WithId<UserModel>[]> {
         throw error
     }
 }
-export { getUsers}
+
+async function getUserCollection(): Promise<Collection<UserModel>> {
+    const [col] = await connect(); // Använd bara kollektionen
+    return col; // Returnera kollektionen
+}
+
+export { connect, getUsers, getUserCollection}
