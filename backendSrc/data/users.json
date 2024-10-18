@@ -1,0 +1,33 @@
+[
+    {
+      "username": "BrookeDavis",
+      "password": "password123",
+      "image": "https://example.com/images/brookedavis.jpg",
+      "date_of_creation": "2023-05-12T10:15:30Z"
+    },
+    {
+      "username": "LorelaiGilmore",
+      "password": "qwerty456",
+      "image": "https://example.com/images/lorelaigilmore.jpg",
+      "date_of_creation": "2023-06-22T14:25:45Z"
+    },
+    {
+      "username": "alicewonder",
+      "password": "alice789",
+      "image": "https://example.com/images/alicewonder.jpg",
+      "date_of_creation": "2023-07-30T09:10:20Z"
+    },
+    {
+      "username": "bobmarley",
+      "password": "rastaman123",
+      "image": "https://example.com/images/bobmarley.jpg",
+      "date_of_creation": "2023-08-18T16:45:12Z"
+    },
+    {
+      "username": "charliebrown",
+      "password": "snoopy456",
+      "image": "https://example.com/images/charliebrown.jpg",
+      "date_of_creation": "2023-09-05T11:20:35Z"
+    }
+  ]
+  
