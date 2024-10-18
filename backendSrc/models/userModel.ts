@@ -9,6 +9,7 @@ export interface UserModel {
     }
 
 export interface EditUserModel {
+    _id: ObjectId
     username: string;
     password: string;
     image: string;
