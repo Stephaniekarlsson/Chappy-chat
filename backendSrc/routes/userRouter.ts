@@ -4,6 +4,7 @@ import { ObjectId, WithId } from 'mongodb'
 import { EditUserModel, UserModel } from '../models/userModel.js'
 import { createUser } from '../userFunctions.js'
 import { validateEditUser, validateUser } from '../validation/validateFunctions.js'
+import { Filter } from 'mongodb'
 
 const router: Router = express.Router()
 
@@ -21,6 +22,38 @@ router.get('/', async (_, res: Response) => {
         res.sendStatus(500)
     }
 })
+
+router.get('/search-users', async (req: Request, res: Response) => {
+    try {
+        const { username } = req.query;
+
+        if ((!username || (username as string).trim() === '')) {
+            res.sendStatus(400)
+        }
+
+        const filter: Filter<UserModel> = {};
+
+        if (username) {
+            const searchTerms = (username as string).split(' ').map(term => term.trim());
+
+            filter.$or = searchTerms.map(term => ({
+                username: { $regex: new RegExp(term, 'i') }
+            }));
+        }
+
+        const userCol = await getUserCollection();
+        const filteredUsers = await userCol.find(filter).toArray();
+
+        if (filteredUsers.length === 0) {
+            res.sendStatus(404)
+        }
+
+        res.status(200).json(filteredUsers);
+    } catch (error) {
+        console.error('Error searching for users:', error);
+        res.sendStatus(500)
+    }
+});
 
 router.post('/', validateUser, async (req: Request, res: Response) => {
     const newUser: UserModel = {

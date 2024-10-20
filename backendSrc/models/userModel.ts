@@ -5,7 +5,7 @@ export interface UserModel {
     username: string;
     password: string;
     image: string;
-    date_of_creation: number;
+    date_of_creation: Date;
     }
 
 export interface EditUserModel {
