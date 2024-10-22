@@ -4,9 +4,13 @@ import { WithId, ObjectId } from 'mongodb'
 import { UserModel, EditUserModel } from '../models/userModel.js'
 import { createUser } from '../functions/userFunctions.js'
 import { validateUser, validateEditUser } from '../validation/validateFunctions.js'
-
+import jwt from 'jsonwebtoken'
+import { validateLogin } from '../validation/validateLogin.js'
 
 const router: Router = express.Router()
+const { sign } = jwt
+
+
 
 router.get('/', async (_, res: Response) => {
     try {
@@ -49,6 +53,34 @@ router.get('/search-users', async (req: Request, res: Response) => {
         res.sendStatus(500); 
     }
 });
+
+router.post('/login', async (req: Request, res: Response) => {
+    console.log("entered POST/login");
+  
+    if( !process.env.SECRET ) {
+      res.sendStatus(500)
+      return
+    }
+    
+    console.log('Body är: ', req.body)
+    const userId = await validateLogin(req.body.username, req.body.password)
+    
+    console.log('user id: ', userId)
+    
+    if( !userId ) {
+      res.status(401).send({
+        "error": "Unauthorized",
+        "message": "You are not authorized to access this resource."
+      })
+      return
+    }
+    
+    const payload = {
+      userId
+    }
+    const token: string = sign(payload, process.env.SECRET)
+    res.send({ jwt: token })
+})
 
 router.post('/', validateUser, async (req: Request, res: Response) => {
     const newUser: UserModel = {

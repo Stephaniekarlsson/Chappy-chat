@@ -14,3 +14,8 @@ export interface EditUserModel {
     password: string;
     image: string;
 }
+
+export interface Payload {
+    userId: string;
+	iat: number;
+}
