@@ -1,3 +1,4 @@
+import { channelModelSchema } from "./validateChannels.js";
 import { userModelSchema, editUserModelSchema } from "./validateUsers.js";
 import { Request, Response } from 'express';
 
@@ -23,4 +24,14 @@ const validateEditUser = async (req: Request, res: Response, next: Function) => 
     }
 }
 
-export { validateUser, validateEditUser}
+const validateChannel = async (req: Request, res: Response, next: Function) => {
+    try {
+        await channelModelSchema.validateAsync(req.body)
+        next()
+    } catch (error) {
+        console.log('Validation error', error);
+        res.sendStatus(400)
+    }
+}
+
+export { validateUser, validateEditUser, validateChannel}

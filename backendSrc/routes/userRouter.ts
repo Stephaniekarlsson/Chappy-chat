@@ -2,7 +2,7 @@ import express, { Router, Response, Request } from 'express'
 import { getUsers, getUserCollection } from '../connect.js'
 import { WithId, ObjectId } from 'mongodb'
 import { UserModel, EditUserModel } from '../models/userModel.js'
-import { createUser } from '../userFunctions.js'
+import { createUser } from '../functions/userFunctions.js'
 import { validateUser, validateEditUser } from '../validation/validateFunctions.js'
 
 
@@ -73,6 +73,7 @@ router.put('/:id', validateEditUser, async (req: Request, res: Response) => {
     try {
         if (!ObjectId.isValid(userId)) {
             res.sendStatus(400); 
+            return
         }
 
         const col = await getUserCollection(); 
@@ -83,6 +84,7 @@ router.put('/:id', validateEditUser, async (req: Request, res: Response) => {
 
         if (result.matchedCount === 0) {
             res.sendStatus(404);
+            return
         }
         res.sendStatus(200); 
 
