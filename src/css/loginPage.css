@@ -69,6 +69,7 @@
 @media (max-width: 800px) {
   .overlay-container {
     flex-direction: column;
+    width: 85%;
   }
 
   .img-container {
@@ -86,5 +87,9 @@
   .login-container > h1 {
     margin: 0em 0em .8em 0em;
     font-size: 43px;
+}
+
+.login-container {
+    width: 75%;
 }
 }
