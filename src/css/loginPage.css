@@ -1,0 +1,91 @@
+.section-container {
+    background-color:hsla(206,39%,16%,1);
+    background-image:
+    radial-gradient(at 45% 88%, hsla(191,18%,44%,1) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, hsla(177,12%,58%,1) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, hsla(200,31%,30%,1) 0px, transparent 50%),
+    radial-gradient(at 0% 0%, hsla(177,12%,58%,1) 0px, transparent 50%),
+    radial-gradient(at 1% 79%, hsla(206,39%,16%,1) 0px, transparent 50%),
+    radial-gradient(at 75% 32%, hsla(206,39%,16%,1) 0px, transparent 50%),
+    radial-gradient(at 77% 34%, hsla(200,31%,30%,1) 0px, transparent 50%);
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.overlay-container {
+    width: 80%;
+    height: 80%;
+    background-color: rgb(237, 237, 237, 0.7);
+    border-radius: 20px;
+    box-shadow: 2px 2px 10px  rgb(41, 41, 41);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.img-container {
+    width: 50%;
+    height: 80%;
+}
+
+.owl-img {
+    height: 100%;
+    width: 100%;
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 50%;
+} 
+
+.login-container > h1 {
+    font-family: var(--header-font);
+    color: var(--dark-blue);
+    margin: 1em 0em 1em 0em;
+    font-size: 56px;
+    margin-bottom: 1.5em;
+}
+
+.p-container {
+    display: flex;
+    gap: 1em;
+    margin-bottom: 1em;
+}
+
+.p-container > p {
+    color: var(--dark-blue);
+}
+
+.guest {
+    border-right: 1px solid var(--dark-blue);
+    padding-right: 15px;
+}
+
+@media (max-width: 800px) {
+  .overlay-container {
+    flex-direction: column;
+  }
+
+  .img-container {
+    display: flex;
+    justify-content: center;
+    height: auto;
+    margin-top: 1.5em;
+  }
+
+  .owl-img {
+    height: 100px;
+    width: auto;
+  }
+
+  .login-container > h1 {
+    margin: 0em 0em .8em 0em;
+    font-size: 43px;
+}
+}

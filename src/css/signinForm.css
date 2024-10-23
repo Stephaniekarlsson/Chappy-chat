@@ -1,0 +1,41 @@
+.form-container {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    gap: 0.5em;
+    margin-top: 1em;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    /* width: 90%; */
+}
+
+.input-container > label {
+    font-size: 12px;
+    color: var(--dark-blue);
+    margin-left: 0.3em;
+    
+}
+
+
+.signin-input {
+    background-color: #ededed;
+    height: 3.5em;
+    border: 2px solid var(--dark-blue);
+    border-radius: 10px;
+    padding: 0.5em;
+}
+
+.signin-btn {
+    background-color: var(--dark-blue);
+    color: #ededed;
+    width: 50%;
+    height: 2.5em;
+    border-radius: 10px;
+    align-self: center;
+    margin-top: 0.5em;
+    
+
+}
