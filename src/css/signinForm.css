@@ -26,6 +26,7 @@
     border: 2px solid var(--dark-blue);
     border-radius: 10px;
     padding: 0.5em;
+    margin-bottom: .5em;
 }
 
 .signin-btn {

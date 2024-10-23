@@ -47,9 +47,8 @@
 .login-container > h1 {
     font-family: var(--header-font);
     color: var(--dark-blue);
-    margin: 1em 0em 1em 0em;
+    margin: 1.3em 0em 1em 0em;
     font-size: 56px;
-    margin-bottom: 1.5em;
 }
 
 .p-container {
