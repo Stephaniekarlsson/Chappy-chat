@@ -3,6 +3,10 @@
 :root {
  --dark: #1a2d3c;
  --dark-blue: #365768;
+ --blue: #5d8088;
+ --light-grue: #88a3a2;
+ --white: #ededed;
+ --white-transp: rgb(237, 237, 237, 0.7);
 
  --header-font: "Fredericka the Great", serif;
 
@@ -12,4 +16,8 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+ul {
+  list-style: none;
 }
