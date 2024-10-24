@@ -62,6 +62,7 @@
 
 .p-container > p {
     color: var(--dark-blue);
+    cursor: pointer;
 }
 
 .guest {

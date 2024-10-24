@@ -1,6 +1,9 @@
 .container {
     display: flex;
     transition: all 0.3s ease;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .navbar {
@@ -13,6 +16,7 @@
 
 .container.expanded {
     display: flex;
+    max-width: 18em;
   }
 
 .container.collapsed {
@@ -42,6 +46,7 @@
     width: 4.5em;
     height: 4.5em;
     margin: 1em .7em;
+    cursor: pointer;
 }
 
 .logout-btn {

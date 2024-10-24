@@ -1,12 +1,14 @@
 import '../css/guestView.css'
 import { Navbar } from './Navbar.js'
+import { Chat } from './Chat.js'
 
 export const GuestView = () => {
     return (
         <>
-        <section>
+        <div className="guestview-container">
             <Navbar />
-        </section>
+            <Chat />
+        </div>
         </>
     )
 }
