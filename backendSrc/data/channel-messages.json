@@ -1,0 +1,33 @@
+
+[
+  {
+    "channel_id": "671b5d7774436cde3703d81f", 
+    "sender": "BrookeDavis",
+    "message": "Hello everyone in TechTalks!",
+    "timestamp": "2024-10-25T10:00:00Z"
+  },
+  {
+    "channel_id": "671b5d7774436cde3703d820", 
+    "sender": "LorelaiGilmore",
+    "message": "Loving the vibes in MusicVibes!",
+    "timestamp": "2024-10-25T10:05:00Z"
+  },
+  {
+    "channel_id": "671b5d7774436cde3703d821", 
+    "sender": "SallieBallie",
+    "message": "Who's planning their next trip? Dogs must be allowed",
+    "timestamp": "2024-10-25T10:10:00Z"
+  },
+  {
+    "channel_id": "671b5d7774436cde3703d822", 
+    "sender": "LabanBaban",
+    "message": "All animals are amazing! Including me 🐾",
+    "timestamp": "2024-10-25T10:15:00Z"
+  },
+  {
+    "channel_id": "671b5d7774436cde3703d822", 
+    "sender": "LuddeNuss",
+    "message": "Indeed we are brother! <3",
+    "timestamp": "2024-10-25T10:15:00Z"
+  }
+]

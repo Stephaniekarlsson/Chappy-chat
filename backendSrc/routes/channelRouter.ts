@@ -2,8 +2,11 @@ import express, { Router, Response, Request } from 'express'
 import { WithId, ObjectId } from 'mongodb'
 import { ChannelModel } from '../models/ChannelModel.js'
 import { getChannels, getChannelsCollection } from '../connect.js'
-import { createChannel } from '../functions/channelFunctions.js'
+import { createChannel, createChannelMessage } from '../functions/channelFunctions.js'
 import { validateChannel } from '../validation/validateFunctions.js'
+import { getMessagesByChannelId } from '../functions/channelFunctions.js'
+import { MessageModel } from '../models/messageModel.js'
+
 
 const router: Router = express.Router()
 
@@ -119,5 +122,37 @@ router.delete('/:id', async (req: Request, res: Response) => {
         res.sendStatus(500); 
     }
 });
+
+router.get('/:channelId/messages', async (req: Request, res: Response) => {
+    const channelId = req.params.channelId;
+    try {
+        const messages = await getMessagesByChannelId(channelId); 
+        res.status(200).json(messages);
+    } catch (error) {
+        console.error('Error fetching messages:', error);
+        res.sendStatus(500);
+    }
+    
+})
+
+router.post('/:channelId/messages', async (req: Request, res: Response) => {
+    const channelId = req.params.channelId;
+
+    const newMessage: MessageModel = {
+        channel_id: channelId,
+        sender: req.body.sender,
+        message: req.body.message,
+        timestamp: new Date(), 
+    };
+
+    try {
+        await createChannelMessage(newMessage);
+        res.sendStatus(201); 
+    } catch (error) {
+        console.error('Error inserting message:', error);
+        res.sendStatus(500); 
+    }
+});
+
 
 export { router }

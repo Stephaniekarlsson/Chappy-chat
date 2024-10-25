@@ -2,31 +2,31 @@
     {
       "username": "BrookeDavis",
       "password": "password123",
-      "image": "https://example.com/images/brookedavis.jpg",
+      "image": "https://i.postimg.cc/ncj2QZgK/Designer-6.jpg",
       "date_of_creation": "2023-05-12T10:15:30Z"
     },
     {
       "username": "LorelaiGilmore",
       "password": "qwerty456",
-      "image": "https://example.com/images/lorelaigilmore.jpg",
+      "image": "https://i.postimg.cc/ncj2QZgK/Designer-6.jpg",
       "date_of_creation": "2023-06-22T14:25:45Z"
     },
     {
-      "username": "alicewonder",
-      "password": "alice789",
-      "image": "https://example.com/images/alicewonder.jpg",
+      "username": "SallieBallie",
+      "password": "123",
+      "image": "https://i.postimg.cc/sx8J00QZ/Designer-4.jpg",
       "date_of_creation": "2023-07-30T09:10:20Z"
     },
     {
-      "username": "bobmarley",
-      "password": "rastaman123",
-      "image": "https://example.com/images/bobmarley.jpg",
+      "username": "LuddeNuss",
+      "password": "123",
+      "image": "https://i.postimg.cc/05HZQrW2/Designer-5.jpg",
       "date_of_creation": "2023-08-18T16:45:12Z"
     },
     {
-      "username": "charliebrown",
-      "password": "snoopy456",
-      "image": "https://example.com/images/charliebrown.jpg",
+      "username": "LabanBaban",
+      "password": "123",
+      "image": "https://i.postimg.cc/8krw7NqR/Designer-7.jpg",
       "date_of_creation": "2023-09-05T11:20:35Z"
     }
   ]
