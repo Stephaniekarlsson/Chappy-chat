@@ -9,6 +9,7 @@ import { validateLogin } from '../validation/validateLogin.js'
 
 const router: Router = express.Router()
 const { sign } = jwt
+const default_profile_img = 'https://i.postimg.cc/ncj2QZgK/Designer-6.jpg'
 
 
 
@@ -102,6 +103,7 @@ router.post('/login', async (req: Request, res: Response) => {
 router.post('/', validateUser, async (req: Request, res: Response) => {
     const newUser: UserModel = {
         ...req.body,
+        image: req.body.image || default_profile_img,
         date_of_creation: new Date().toISOString()
     };
 
