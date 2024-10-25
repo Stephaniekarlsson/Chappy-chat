@@ -1,6 +1,7 @@
 import { MongoClient, Collection, ObjectId, InsertOneResult } from "mongodb";
 import { UserModel } from "../models/userModel.js";
 import { connect } from '../connect.js'
+import { getUserCollection } from "../connect.js";
 
 async function createUser(user: UserModel): Promise<ObjectId | null> {
     const client: MongoClient = await connect(); 
@@ -20,4 +21,16 @@ async function createUser(user: UserModel): Promise<ObjectId | null> {
     }
 }
 
-export { createUser };
+async function getUserById(userId: string) {
+    try {
+        const col = await getUserCollection();
+        return col.findOne({ _id: new ObjectId(userId) });
+
+    } catch (error) {
+        console.log('Error finding user');
+        throw error
+    }
+         
+}
+
+export { createUser, getUserById };

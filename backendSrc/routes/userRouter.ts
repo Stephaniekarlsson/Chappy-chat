@@ -2,7 +2,7 @@ import express, { Router, Response, Request } from 'express'
 import { getUsers, getUserCollection } from '../connect.js'
 import { WithId, ObjectId } from 'mongodb'
 import { UserModel, EditUserModel } from '../models/userModel.js'
-import { createUser } from '../functions/userFunctions.js'
+import { createUser, getUserById } from '../functions/userFunctions.js'
 import { validateUser, validateEditUser } from '../validation/validateFunctions.js'
 import jwt from 'jsonwebtoken'
 import { validateLogin } from '../validation/validateLogin.js'
@@ -74,12 +74,26 @@ router.post('/login', async (req: Request, res: Response) => {
       })
       return
     }
+
+    const user = await getUserById(userId); 
+    
+    if (!user) {
+      res.status(404).send({
+        "error": "User not found",
+        "message": "No user found with the given ID."
+      });
+      return;
+    }
     
     const payload = {
       userId
     }
     const token: string = sign(payload, process.env.SECRET)
-    res.send({ jwt: token })
+    res.send({ 
+        jwt: token,
+        username: user.username,
+        image: user.image || '',
+     })
 })
 
 router.post('/', validateUser, async (req: Request, res: Response) => {
