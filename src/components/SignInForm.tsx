@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom'
 
 interface LoginResponse {
   jwt: string
+  username: string;
+  image?: string;
 }
 
 export function SignInForm() {
@@ -13,6 +15,7 @@ export function SignInForm() {
   const [password, setPassword] = useState<string>('')
   const [error, setError] = useState<string | null>(null);
   const setIsAuthenticated = useUserStore((state) => state.setIsAuthenticated);
+  const setUser = useUserStore((state) => state.setUser);
   const navigate = useNavigate()
 
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
@@ -26,12 +29,18 @@ export function SignInForm() {
         },
         body: JSON.stringify({ username, password }),
     });
-
+    
     if (response.ok) {
       const data: LoginResponse = await response.json()
+      console.log('Received user data:', data);
       localStorage.setItem('token', data.jwt)
       console.log('Successful login', data);
+      const userData = {
+        username: data.username,
+        image: data.image || '', 
+      }; 
       setIsAuthenticated(true)
+      setUser(userData)
       setUsername('')
       setPassword('')
       navigate('/guest')
@@ -42,7 +51,8 @@ export function SignInForm() {
     }
     } catch (error) {
       setError('Something went wrong. Please try again later.');
-      throw error
+      console.error(error);
+      
       
     }
     

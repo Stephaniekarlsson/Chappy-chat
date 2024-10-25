@@ -16,6 +16,8 @@ export const Navbar = () => {
     const navigate = useNavigate()
     const [users, setUsers] = useState<UserType[]>([]);
     const [channels, setChannels] = useState<ChannelType[]>([]);
+    const user = useUserStore((state) => state.user)
+    // console.log("Current user in Navbar:", user); 
 
     const toggleMenu = () => {
         setIsOpen(!isOpen)
@@ -42,12 +44,6 @@ export const Navbar = () => {
 
 
     const data = activeTab === 'users' ? users : activeTab === 'channels' ? channels : [];
-
-    const user = {
-        id:1,
-        username: 'My username',
-        img: '/path/to/profile3.jpg'
-    }
 
     return (
         <>
@@ -97,9 +93,15 @@ export const Navbar = () => {
                     ))}
                 </ul>
                 <div className='my-profile'>
-                <img src={user.img} />
-                <p>{user.username}</p>
-            </div>
+                    {user ? (
+                        <>
+                        <img src={user.image} />
+                        <p>{user.username}</p>
+                        </>
+                    ): (
+                        <p>Signed in as guest</p>
+                    )}
+                </div>
             </div>
         </div>
         </>
