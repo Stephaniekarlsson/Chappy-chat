@@ -75,14 +75,15 @@ router.post('/login', async (req: Request, res: Response) => {
       return
     }
 
-    const user = await getUserById(userId); 
-    
+    const user = await getUserById('', req.body.username);
+
     if (!user) {
-      res.status(404).send({
-        "error": "User not found",
-        "message": "No user found with the given ID."
-      });
-      return;
+        console.log("Invalid login attempt: User not found");
+        res.status(401).send({
+            "error": "Unauthorized",
+            "message": "You are not authorized to access this resource."
+        });
+        return;
     }
     
     const payload = {
@@ -91,8 +92,10 @@ router.post('/login', async (req: Request, res: Response) => {
     const token: string = sign(payload, process.env.SECRET)
     res.send({ 
         jwt: token,
-        username: user.username,
-        image: user.image || '',
+        user: {
+            username: user.username,
+            image: user.image || '',
+        }
      })
 })
 

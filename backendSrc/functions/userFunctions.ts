@@ -21,16 +21,19 @@ async function createUser(user: UserModel): Promise<ObjectId | null> {
     }
 }
 
-async function getUserById(userId: string) {
+async function getUserById(userId: string | ObjectId, username?: string) {
     try {
         const col = await getUserCollection();
-        return col.findOne({ _id: new ObjectId(userId) });
-
+        if (username) {
+            return col.findOne({ username });
+        } else {
+            return col.findOne({ _id: new ObjectId(userId) });
+        }
     } catch (error) {
-        console.log('Error finding user');
-        throw error
+        console.log('Error finding user:', error);
+        throw error;
     }
-         
 }
+
 
 export { createUser, getUserById };
