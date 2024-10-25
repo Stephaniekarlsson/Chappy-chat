@@ -53,14 +53,14 @@
     margin-top: auto;
   }
 
-  .logout {
+.logout {
     width: 2em;
     height: 2em;
     font-size: 1.5em;
     display: flex;
     justify-content: center;
     align-items: center;
-  }
+}
 
   .content {
     background: #253A47;
@@ -90,6 +90,13 @@
     gap: 1em;
 }
 
+.item-row {
+  display: flex;
+  align-items: center;
+  gap: 10px; 
+  padding: 5px 0;
+}
+
  .my-profile {
     display: flex;
     gap: .5em;
@@ -109,5 +116,12 @@
     left: 5px;
     z-index: 1000; 
     color: var(--white-transp);
+}
+
+.item-image {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid var(--blue);  
 }
 

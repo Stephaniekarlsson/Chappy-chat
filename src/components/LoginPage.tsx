@@ -2,11 +2,15 @@ import '../css/loginPage.css'
 import owl from '../assets/hi_owl3.png'
 import { SignInForm } from './SignInForm'
 import { useNavigate } from 'react-router-dom'
+import { useUserStore } from '../data/store'
 
 export const LoginPage = () => {
-    
+
+    const setIsAuthenticated = useUserStore((state) => state.setIsAuthenticated);
     const navigate = useNavigate()
+
     const handleUseAsGuest = () => {
+        setIsAuthenticated(false)
         navigate('/guest')
     }
 

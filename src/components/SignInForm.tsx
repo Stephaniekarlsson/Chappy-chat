@@ -1,5 +1,7 @@
 import '../css/signinForm.css'
 import { useState } from 'react'
+import { useUserStore } from '../data/store'
+import { useNavigate } from 'react-router-dom'
 
 interface LoginResponse {
   jwt: string
@@ -10,6 +12,8 @@ export function SignInForm() {
   const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [error, setError] = useState<string | null>(null);
+  const setIsAuthenticated = useUserStore((state) => state.setIsAuthenticated);
+  const navigate = useNavigate()
 
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault()
@@ -27,8 +31,10 @@ export function SignInForm() {
       const data: LoginResponse = await response.json()
       localStorage.setItem('token', data.jwt)
       console.log('Successful login', data);
+      setIsAuthenticated(true)
       setUsername('')
       setPassword('')
+      navigate('/guest')
       
     } else {
       const errorData = await response.json()
@@ -46,7 +52,7 @@ export function SignInForm() {
         
       <form className='form-container' onSubmit={handleSubmit}>
         {error && <p className="error">{error}</p>}
-        <div className='input-container'>
+        <div className='login-input-container'>
           <label>Username</label>
           <input
             className='signin-input'
@@ -57,7 +63,7 @@ export function SignInForm() {
             required/>
         </div>
 
-        <div className='input-container'>
+        <div className='login-input-container'>
           <label>Password</label>
           <input
             className='signin-input'
