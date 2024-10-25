@@ -1,18 +1,19 @@
 [
     {
-      "channel_name": "TechTalks"
+      "channel_name": "TechTalks",
+      "image": "https://i.postimg.cc/zv7bCfb0/Designer.jpg"
     },
     {
-      "channel_name": "GamingHub"
+      "channel_name": "MusicVibes",
+      "image": "https://i.postimg.cc/mZyHfmXC/Designer-1.jpg"
     },
     {
-      "channel_name": "MusicVibes"
+      "channel_name": "TravelAdventures",
+      "image": "https://i.postimg.cc/wvhsB26K/Designer-2.jpg"
     },
     {
-      "channel_name": "FitnessFreaks"
-    },
-    {
-      "channel_name": "TravelAdventures"
+      "channel_name": "AnimalChat",
+      "image": "https://i.postimg.cc/tJpnn6Ts/Designer-3.jpg"
     }
   ]
   

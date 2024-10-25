@@ -11,6 +11,7 @@ interface LoginResponse {
 
 export function SignInForm() {
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [error, setError] = useState<string | null>(null);
@@ -20,6 +21,7 @@ export function SignInForm() {
 
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault()
+    setIsLoading(true);
 
     try {
       const response = await fetch('/api/users/login', {
@@ -29,6 +31,7 @@ export function SignInForm() {
         },
         body: JSON.stringify({ username, password }),
     });
+    setIsLoading(false);
     
     if (response.ok) {
       const data: LoginResponse = await response.json()
@@ -50,6 +53,7 @@ export function SignInForm() {
       setError(errorData.message || 'Error occurred')
     }
     } catch (error) {
+      setIsLoading(false);
       setError('Something went wrong. Please try again later.');
       console.error(error);
       
@@ -84,7 +88,7 @@ export function SignInForm() {
             required/>
         </div>
 
-        <button type='submit' className='signin-btn'>Sign in</button>
+        <button type='submit' className='signin-btn'>{isLoading ? 'Signing in...' : 'Sign in'}</button>
       </form>
     
     )

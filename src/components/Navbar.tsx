@@ -16,8 +16,8 @@ export const Navbar = () => {
     const navigate = useNavigate()
     const [users, setUsers] = useState<UserType[]>([]);
     const [channels, setChannels] = useState<ChannelType[]>([]);
-    const user = useUserStore((state) => state.user)
-    // console.log("Current user in Navbar:", user); 
+    const user = useUserStore((state) => state.user);
+    console.log("Current user in Navbar:", user); 
 
     const toggleMenu = () => {
         setIsOpen(!isOpen)
