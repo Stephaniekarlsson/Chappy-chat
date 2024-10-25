@@ -104,7 +104,7 @@
     padding-bottom: 1em; 
 }
 
-.my-profile > p {
+.item-row > p {
     color: var(--white-transp);
 }
 
@@ -118,7 +118,7 @@
     color: var(--white-transp);
 }
 
-.item-image {
+.item-image, .item-row > img {
   width: 38px;
   height: 38px;
   border-radius: 50%;

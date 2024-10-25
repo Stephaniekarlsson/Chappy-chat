@@ -114,8 +114,10 @@ export const Navbar = () => {
                 <div className='my-profile'>
                     {user ? (
                         <>
-                        <img src={user.image} />
-                        <p>{user.username}</p>
+                        <div className="item-row">
+                            <img src={user.image} />
+                            <p>{user.username}</p>
+                        </div>
                         </>
                     ): (
                         <p>Signed in as guest</p>
