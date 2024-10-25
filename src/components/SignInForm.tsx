@@ -2,6 +2,7 @@ import '../css/signinForm.css'
 import { useState } from 'react'
 import { useUserStore } from '../data/store'
 import { useNavigate } from 'react-router-dom'
+import { loginUser } from '../api/userApi'
 
 interface LoginResponse {
   jwt: string
@@ -20,47 +21,36 @@ export function SignInForm() {
   const navigate = useNavigate()
 
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
-    e.preventDefault()
+    e.preventDefault();
     setIsLoading(true);
 
     try {
-      const response = await fetch('/api/users/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
-    });
-    setIsLoading(false);
-    
-    if (response.ok) {
-      const data: LoginResponse = await response.json()
-      console.log('Received user data:', data);
-      localStorage.setItem('token', data.jwt)
-      console.log('Successful login', data);
-      const userData = {
-        username: data.username,
-        image: data.image || '', 
-      }; 
-      setIsAuthenticated(true)
-      setUser(userData)
-      setUsername('')
-      setPassword('')
-      navigate('/guest')
-      
-    } else {
-      const errorData = await response.json()
-      setError(errorData.message || 'Error occurred')
-    }
+        const data: LoginResponse = await loginUser(username, password);
+        console.log('Received user data:', data);
+        
+        localStorage.setItem('token', data.jwt);
+        console.log('Successful login', data);
+        localStorage.setItem('user', JSON.stringify({ username: data.username, image: data.image || '' }));
+        
+        const userData = {
+            username: data.username,
+            image: data.image || '', 
+        }; 
+        
+        setIsAuthenticated(true);
+        setUser(userData);
+        setUsername('');
+        setPassword('');
+        navigate('/guest');
+        
     } catch (error) {
-      setIsLoading(false);
-      setError('Something went wrong. Please try again later.');
-      console.error(error);
-      
-      
+        setIsLoading(false);
+        setError('Something went wrong. Please try again later.');
+        console.error(error);
+    } finally {
+        setIsLoading(false);
     }
-    
-  }
+};
 
     return (
         

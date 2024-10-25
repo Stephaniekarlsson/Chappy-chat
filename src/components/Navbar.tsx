@@ -17,6 +17,8 @@ export const Navbar = () => {
     const [users, setUsers] = useState<UserType[]>([]);
     const [channels, setChannels] = useState<ChannelType[]>([]);
     const user = useUserStore((state) => state.user);
+    const setUser = useUserStore((state) => state.setUser);
+    
     console.log("Current user in Navbar:", user); 
 
     const toggleMenu = () => {
@@ -41,6 +43,23 @@ export const Navbar = () => {
         };
         loadData();
     }, [activeTab]); 
+
+    useEffect(() => {
+    const checkAuthStatus = () => {
+        const token = localStorage.getItem('token');
+        const savedUser = localStorage.getItem('user');
+
+        if (token && savedUser) {
+            setIsAuthenticated(true);
+            setUser(JSON.parse(savedUser));
+        } else {
+            setIsAuthenticated(false);
+            setUser(null);
+        }
+    };
+
+    checkAuthStatus();
+}, [setIsAuthenticated, setUser]);
 
 
     const data = activeTab === 'users' ? users : activeTab === 'channels' ? channels : [];
