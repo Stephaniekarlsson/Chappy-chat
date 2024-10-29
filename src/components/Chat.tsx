@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 import { LuSendHorizonal } from "react-icons/lu";
 import { useMessageStore } from '../data/messageStore';
 import { useUserStore } from '../data/UserStore';
+import { addChannelMessage } from '../api/channelApi';
 
 
 export const Chat = () => {
@@ -14,17 +15,23 @@ export const Chat = () => {
 
   const filteredMessages = messages.filter(message => message.channel_id === currentChannelId);
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (inputValue.trim() && currentChannelId) {
-      addMessage({
-        _id: messages.length + 1,
-        message: inputValue,
-        sender: currentUser,
+      const newMessage = {
         channel_id: currentChannelId,
-      });
-        setInputValue(''); 
+        sender: currentUser,
+        message: inputValue,
+      };
+
+      const response = await addChannelMessage(newMessage);
+
+      if (response) {
+        
+        addMessage(response); 
+        setInputValue('');
       }
-    };
+    }
+  };
 
     useEffect(() => {
       endOfMessagesRef.current?.scrollIntoView({ behavior: 'smooth' });

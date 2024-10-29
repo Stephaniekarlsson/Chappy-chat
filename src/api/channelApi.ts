@@ -2,11 +2,17 @@ import { ObjectId } from "mongodb";
 
 export type Channel = { _id: ObjectId; channel_name: string; image: string };
 export type ChannelMessage = {
-  _id: ObjectId;
+  _id: number;
   channel_id: string; 
   sender: string;
   message: string;
   timestamp: Date;
+};
+
+export type NewMessage = {
+  channel_id: string; 
+  sender: string;
+  message: string;
 };
 
 export const fetchChannels = async (): Promise<Channel[]> => {
@@ -22,9 +28,9 @@ export const fetchChannels = async (): Promise<Channel[]> => {
   }
 };
 
-export const fetchChannelMessages = async (channelId: string): Promise<ChannelMessage[]> => {
+export const fetchChannelMessages = async (channel_id: string): Promise<ChannelMessage[]> => {
   try {
-      const response = await fetch(`/api/channels/${channelId}/messages`);
+      const response = await fetch(`/api/channels/${channel_id}/messages`);
       if (!response.ok) {
           throw new Error('Failed to fetch messages');
       }
@@ -32,5 +38,26 @@ export const fetchChannelMessages = async (channelId: string): Promise<ChannelMe
   } catch (error) {
       console.error('Error fetching messages', error);
       return [];
+  }
+};
+
+export const addChannelMessage = async (newMessage: NewMessage): Promise<ChannelMessage | null> => {
+  try {
+    const response = await fetch(`/api/channels/${newMessage.channel_id}/messages`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newMessage),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to add message');
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error adding message:', error);
+    return null;
   }
 };
