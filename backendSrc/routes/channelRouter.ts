@@ -147,10 +147,15 @@ router.post('/:channelId/messages', async (req: Request, res: Response) => {
 
     try {
         await createChannelMessage(newMessage);
-        res.sendStatus(201); 
+        res.status(201).send({
+            message: 'Message created successfully'
+        })
+
     } catch (error) {
         console.error('Error inserting message:', error);
-        res.sendStatus(500); 
+        res.status(500).send({
+            error: 'Failed to create message'
+        }); 
     }
 });
 
