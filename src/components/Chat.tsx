@@ -3,12 +3,12 @@ import { useState, useRef, useEffect } from 'react';
 import { LuSendHorizonal } from "react-icons/lu";
 import { useMessageStore } from '../data/messageStore';
 import { useUserStore } from '../data/UserStore';
-import { addChannelMessage } from '../api/channelApi';
+import { addChannelMessage, fetchChannelMessages } from '../api/channelApi';
 
 
 export const Chat = () => {
 
-  const { messages, addMessage, currentChannelId } = useMessageStore();
+  const { messages, addMessage, currentChannelId, setMessages } = useMessageStore();
   const [inputValue, setInputValue] = useState('');
   const endOfMessagesRef = useRef<HTMLDivElement>(null)
   const currentUser = useUserStore((state) => state.user?.username) || 'Guest';
@@ -29,6 +29,8 @@ export const Chat = () => {
         
         addMessage(response); 
         setInputValue('');
+        const updatedMessages = await fetchChannelMessages(currentChannelId);
+        setMessages(updatedMessages);
       }
     }
   };
