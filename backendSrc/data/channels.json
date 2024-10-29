@@ -1,19 +1,23 @@
 [
     {
       "channel_name": "TechTalks",
-      "image": "https://i.postimg.cc/zv7bCfb0/Designer.jpg"
+      "image": "https://i.postimg.cc/zv7bCfb0/Designer.jpg",
+      "isLocked": false
     },
     {
       "channel_name": "MusicVibes",
-      "image": "https://i.postimg.cc/mZyHfmXC/Designer-1.jpg"
+      "image": "https://i.postimg.cc/mZyHfmXC/Designer-1.jpg",
+      "isLocked": false
     },
     {
       "channel_name": "TravelAdventures",
-      "image": "https://i.postimg.cc/wvhsB26K/Designer-2.jpg"
+      "image": "https://i.postimg.cc/wvhsB26K/Designer-2.jpg",
+      "isLocked": true
     },
     {
       "channel_name": "AnimalChat",
-      "image": "https://i.postimg.cc/tJpnn6Ts/Designer-3.jpg"
+      "image": "https://i.postimg.cc/tJpnn6Ts/Designer-3.jpg",
+      "isLocked": true
     }
   ]
   
