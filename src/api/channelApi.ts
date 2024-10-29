@@ -1,6 +1,10 @@
-import { ObjectId } from "mongodb";
 
-export type Channel = { _id: ObjectId; channel_name: string; image: string };
+export type Channel = { 
+  _id: number;
+  channel_name: string; 
+  image: string 
+  isLocked: boolean};
+
 export type ChannelMessage = {
   _id: number;
   channel_id: string; 

@@ -5,8 +5,11 @@ import { RiMenu2Fill } from "react-icons/ri";
 import { useUserStore } from "../data/UserStore";
 import { useNavigate } from "react-router-dom";
 import { fetchUsers, User as UserType } from "../api/userApi";
-import { fetchChannels, Channel as ChannelType } from "../api/channelApi";
+import { Channel, fetchChannels } from "../api/channelApi";
 import { useMessageStore } from "../data/messageStore"; 
+import { useChannelStore } from "../data/channelStore";
+import { IoLockClosedOutline, IoLockOpenOutline } from "react-icons/io5";
+
 
 export const Navbar = () => {
   const [activeTab, setActiveTab] = useState<"users" | "channels" | "dms">(
@@ -17,10 +20,11 @@ export const Navbar = () => {
   const setIsAuthenticated = useUserStore((state) => state.setIsAuthenticated);
   const navigate = useNavigate();
   const [users, setUsers] = useState<UserType[]>([]);
-  const [channels, setChannels] = useState<ChannelType[]>([]);
+  // const [channels, setChannels] = useState<ChannelType[]>([]);
   const user = useUserStore((state) => state.user);
   const setUser = useUserStore((state) => state.setUser);
   const { setMessages, setCurrentChannelId } = useMessageStore();
+   const { channels, setChannels } = useChannelStore();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -52,18 +56,20 @@ export const Navbar = () => {
 };
 
 
-  useEffect(() => {
-    const loadData = async () => {
-      if (activeTab === "users") {
-        const fetchedUsers = await fetchUsers();
-        setUsers(fetchedUsers);
-      } else if (activeTab === "channels") {
-        const fetchedChannels = await fetchChannels();
+useEffect(() => {
+  const loadData = async () => {
+    if (activeTab === "users") {
+      const fetchedUsers = await fetchUsers();
+      setUsers(fetchedUsers);
+    } else if (activeTab === "channels") {
+      if (channels.length === 0) { 
+        const fetchedChannels = await fetchChannels() as Channel[];
         setChannels(fetchedChannels);
       }
-    };
-    loadData();
-  }, [activeTab]);
+    }
+  };
+  loadData();
+}, [activeTab, channels.length, setChannels]);
 
   useEffect(() => {
     const checkAuthStatus = () => {
@@ -135,8 +141,11 @@ export const Navbar = () => {
 
           <ul>
             {data.map((item) => (
-              <li key={item._id.toString()} className="item-row"
-              onClick={() => handleChannelClick(item._id.toString())}>
+              <li key={item._id.toString()} className={`item-row ${'isLocked' in item && item.isLocked && !isAuthenticated ? 'locked' : ''}`}
+              onClick={() =>
+                (!('isLocked' in item) || !item.isLocked || isAuthenticated) &&
+                handleChannelClick(item._id.toString())
+              }>
                 <img
                   src={"name" in item ? item.image : item.image}
                   className="item-image"
@@ -146,6 +155,11 @@ export const Navbar = () => {
                   : "channel_name" in item
                   ? item.channel_name
                   : ""}
+                  {"isLocked" in item && item.isLocked && (
+                    <span className="lock-icon">
+                    {isAuthenticated ? <IoLockOpenOutline /> : <IoLockClosedOutline />}
+                    </span>
+                    )}
               </li>
             ))}
           </ul>

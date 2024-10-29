@@ -3,6 +3,7 @@ import { create } from 'zustand';
 interface User {
   username: string;
   image?: string; 
+  role: 'user' | 'guest'
 }
 
 interface UserState {
