@@ -1,6 +1,9 @@
 import { ObjectId } from "mongodb";
 
-export type User = { _id: ObjectId; username: string; image: string };
+export type User = { _id: ObjectId;
+  username: string; 
+  image: string
+  role: 'user' | 'guest' };
 
 export interface LoginResponse {
   jwt: string;
