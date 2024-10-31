@@ -1,8 +1,8 @@
 import { useTabStore } from "../data/tabStore";
 import { useUserStore } from "../data/UserStore";
-import { useChannelStore } from "../data/channelStore";
 import { fetchUsers } from "../api/userApi";
 import { fetchChannels } from "../api/channelApi";
+import { useChannelStore } from "../data/channelStore";
 
 export const NavButtons = () => {
   const activeTab = useTabStore((state) => state.activeTab);

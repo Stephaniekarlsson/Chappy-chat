@@ -1,16 +1,21 @@
-import { ObjectId } from "mongodb";
 
-export type Dm = { _id: ObjectId; username: string; image: string };
-
-export const fetchDms = async (): Promise<Dm[]> => {
+export type DmMessage = {
+  sender: string;
+  receiver: string
+  message: string;
+  timestamp: Date;
+};
+ 
+export const fetchDmMessages = async (receiver: string): Promise<DmMessage[]> => {
   try {
-    const response = await fetch('/api/direct-message');
-    if (!response.ok) {
-      throw new Error('Failed to fetch dms');
-    }
-    return await response.json();
+      const response = await fetch(`/api/channels/${receiver}/messages`);
+      if (!response.ok) {
+          throw new Error('Failed to fetch messages');
+      }
+      return await response.json();
   } catch (error) {
-    console.error('Error fetching dms', error);
-    return [];
+      console.error('Error fetching messages', error);
+      return [];
   }
 };
+
