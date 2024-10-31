@@ -25,10 +25,10 @@ async function createChannel(channel: ChannelModel): Promise<ObjectId | null> {
     const getMessagesByChannelId = async (channelId: string) => {
         const messagesCollection = await getChannelMessagesCollection();
 
-        console.log(`Fetching messages for channel ID: ${channelId}`); // Logga ID:t
+        console.log(`Fetching messages for channel ID: ${channelId}`);
         const messages = await messagesCollection.find({ channel_id: channelId }).toArray();
         
-        console.log('Fetched messages:', messages); // Logga meddelandena
+        console.log('Fetched messages:', messages);
         return messages;
 };
 

@@ -1,0 +1,38 @@
+[
+  {
+    "sender": "LuddeNuss",
+    "receiver": "SallieBallie",
+    "message": "Hi, what's up?",
+    "timestamp": { "$date": "2024-10-30T14:15:00Z" }
+  },
+  {
+    "sender": "SallieBallie",
+    "receiver": "LuddeNuss",
+    "message": "Voff!",
+    "timestamp": { "$date": "2024-10-30T14:16:00Z" }
+  },
+  {
+    "sender": "LuddeNuss",
+    "receiver": "SallieBallie",
+    "message": "Mjau!",
+    "timestamp": { "$date": "2024-10-30T14:17:00Z" }
+  },
+  {
+    "sender": "SallieBallie",
+    "receiver": "LuddeNuss",
+    "message": "Do you want to play?",
+    "timestamp": { "$date": "2024-10-30T14:18:00Z" }
+  },
+  {
+    "sender": "LuddeNuss",
+    "receiver": "SallieBallie",
+    "message": "Absolutley not! I'm going to take a nap.",
+    "timestamp": { "$date": "2024-10-30T14:19:00Z" }
+  },
+  {
+    "sender": "SallieBallie",
+    "receiver": "LuddeNuss",
+    "message": "Okay, that's a bummer :( I guess I will take a nap too then..",
+    "timestamp": { "$date": "2024-10-30T14:20:00Z" }
+  }
+]
