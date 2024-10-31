@@ -1,6 +1,7 @@
 import express, { Express } from 'express'
 import { router as userRouter } from './routes/userRouter.js'
 import { router as channelRouter} from './routes/channelRouter.js'
+import { router as dmRouter } from './routes/dmRouter.js'
 
 
 const app: Express = express()
@@ -14,6 +15,7 @@ app.use('/', express.json())
 // Router middleware
 app.use('/api/users', userRouter)
 app.use('/api/channels', channelRouter)
+app.use('/api/direct-messages', dmRouter)
 
 
 // Eventuella routes
