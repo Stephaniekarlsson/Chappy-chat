@@ -2,6 +2,7 @@ import { MongoClient, Db, Collection, WithId } from "mongodb";
 import { UserModel } from "./models/userModel.js";
 import { ChannelModel } from "./models/ChannelModel.js";
 import { MessageModel } from "./models/messageModel.js";
+import { DmModel } from "./models/dmModel.js";
 
 const conString: string | undefined = process.env.CONNECTION_STRING
 
@@ -70,4 +71,11 @@ const getChannelMessagesCollection = async (): Promise<Collection<MessageModel>>
     return col;
 };
 
-export { connect, getUsers, getUserCollection, getChannels, getChannelsCollection, getChannelMessagesCollection}
+const getDmMessagesCollection = async (): Promise<Collection<DmModel>> => {
+    const client = await connect();
+    const db = client.db('ChappyApp') 
+    const col: Collection<DmModel> = db.collection<DmModel>('Dm-messages');
+    return col;
+}
+
+export { connect, getUsers, getUserCollection, getChannels, getChannelsCollection, getChannelMessagesCollection, getDmMessagesCollection}
