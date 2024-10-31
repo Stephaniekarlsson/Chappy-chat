@@ -1,10 +1,14 @@
 import { useUserStore } from "../data/UserStore";
 import { useMessageStore } from "../data/messageStore"; 
+import { useTabStore } from "../data/tabStore";
 import { useEffect } from "react";
+import { fetchDmUsername } from "../api/dmApi";
+import { DmUser } from "../api/dmApi";
 
 export const useCheckAuthStatus = () => {
   const setIsAuthenticated = useUserStore((state) => state.setIsAuthenticated);
   const setUser = useUserStore((state) => state.setUser);
+
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -39,4 +43,41 @@ export const useHandleChannelClick = () => {
   };
 
   return { handleChannelClick };
+};
+
+// export const handleDmTabChange = async (user: DmUser) => {
+//   const setData = useTabStore((state) => state.setData);
+
+//   if (!user) {
+//     console.error("User not found.");
+//     return;
+//   }
+
+//   const dmUsernames = await fetchDmUsername(user.username);
+//   const dmUsers: DmUser[] = dmUsernames.map((username) => ({
+//     username,
+//   }));
+//   setData(dmUsers);
+//   return { useHandleDmTabChange };
+
+// };
+
+export const useHandleDmTabChange = () => {
+  const user = useUserStore((state) => state.user); 
+  const setData = useTabStore((state) => state.setData);
+
+  const handleDmTabChange = async () => {
+    if (!user) {
+      console.error("User not found.");
+      return;
+    }
+
+    const dmUsernames = await fetchDmUsername(user.username);
+    const dmUsers: DmUser[] = dmUsernames.map((username) => ({
+      username,
+    }));
+    setData(dmUsers);
+  };
+
+  return { handleDmTabChange }; // Returnera funktionen
 };

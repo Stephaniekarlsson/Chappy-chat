@@ -1,4 +1,8 @@
 
+export type DmUser = {
+  username: string;
+}
+
 export type DmMessage = {
   sender: string;
   receiver: string
@@ -19,3 +23,16 @@ export const fetchDmMessages = async (receiver: string): Promise<DmMessage[]> =>
   }
 };
 
+
+export const fetchDmUsername = async (username: string): Promise<string[]> => {
+  try {
+    const response = await fetch(`/api/direct-messages/${username}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch DM users');
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching DM users:', error);
+    return [];
+  }
+};

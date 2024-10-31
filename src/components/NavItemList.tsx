@@ -12,15 +12,19 @@ export const NavItemList = () => {
     <ul>
       {data.map((item) => (
         <li
-          key={item._id.toString()}
+          key={("_id" in item) ? item._id.toString() : item.username}
           className={`item-row ${'isLocked' in item && item.isLocked && !isAuthenticated ? 'locked' : ''}`}
           onClick={() => {
             if (!("isLocked" in item) || !item.isLocked || isAuthenticated) {
-              handleChannelClick(item._id.toString()); 
+              handleChannelClick(("_id" in item) ? item._id.toString() : ''); 
             }
           }}
         >
-          <img src={item.image} className="item-image" alt="" />
+          <img 
+            src={("image" in item) ? item.image : 'default-image-url.jpg'} // Använd en standardbild om item är DmUser
+            className="item-image" 
+            alt="" 
+          />
           {"username" in item ? item.username : item.channel_name}
           {("isLocked" in item) && (
             <span className="lock-icon">
