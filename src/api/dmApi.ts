@@ -10,9 +10,9 @@ export type DmMessage = {
   timestamp: Date;
 };
  
-export const fetchDmMessages = async (receiver: string): Promise<DmMessage[]> => {
+export const fetchDmMessages = async (receiver: string, sender: string): Promise<DmMessage[]> => {
   try {
-      const response = await fetch(`/api/channels/${receiver}/messages`);
+      const response = await fetch(`/api/direct-messages?sender=${sender}&receiver=${receiver}`);
       if (!response.ok) {
           throw new Error('Failed to fetch messages');
       }
@@ -36,3 +36,26 @@ export const fetchDmUsername = async (username: string): Promise<string[]> => {
     return [];
   }
 };
+
+export const addDmMessage = async (newMessage: DmMessage) => {
+  try {
+    const response = await fetch('/api/direct-messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newMessage),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to send DM message');
+    }
+
+    const message = await response.json();
+    return message;
+  } catch (error) {
+    console.error('Error sending DM message:', error);
+    return null;
+  }
+};
+

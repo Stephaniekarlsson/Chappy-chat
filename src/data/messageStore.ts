@@ -1,7 +1,10 @@
 import { create } from 'zustand';
+import { DmMessage } from '../api/dmApi';
 
-interface Message {
-  _id: number;
+export type MessageType = Message | DmMessage; 
+
+export interface Message {
+  _id?: number;
   channel_id: string;
   message: string;
   sender: string;
@@ -10,19 +13,23 @@ interface Message {
 }
 
 interface MessageState {
-  messages: Message[];
+  messages: MessageType[];
   currentChannelId: string; 
+  currentDmUser: string | null;
   addMessage: (message: Message) => void;
-  setMessages: (messages: Message[]) => void;
+  setMessages: (messages: MessageType[]) => void;
   setCurrentChannelId: (channelId: string) => void; 
+  setCurrentDmUser: (username: string | null) => void;
 }
 
 export const useMessageStore = create<MessageState>((set) => ({
   messages: [],
   currentChannelId: '', 
+  currentDmUser: null,
   addMessage: (message) => set((state) => ({
     messages: [...state.messages, message]
   })),
   setMessages: (messages) => set({ messages }),
   setCurrentChannelId: (channelId) => set({ currentChannelId: channelId }), 
+  setCurrentDmUser: (username) => set({ currentDmUser: username }),
 }));
