@@ -9,6 +9,7 @@ import { MessageModel } from '../models/messageModel.js'
 
 
 const router: Router = express.Router()
+const default_profile_img = 'https://i.postimg.cc/L5Lscf93/Designer-8.jpg'
 
 router.get('/', async (_, res: Response) => {
     try {
@@ -54,10 +55,10 @@ router.get('/search-channels', async (req: Request, res: Response) => {
 
 router.post('/', validateChannel, async (req: Request, res: Response) => {
     
-    const { img, ...channelData } = req.body;
+    
     const newChannel: ChannelModel = {
-        ...channelData,
-        img: img || 'https://i.postimg.cc/L5Lscf93/Designer-8.jpg'
+        ...req.body,
+        image: req.body.image || default_profile_img
     };
     try {
         await createChannel(newChannel); 
