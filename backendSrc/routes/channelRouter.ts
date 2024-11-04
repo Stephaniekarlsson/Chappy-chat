@@ -60,7 +60,9 @@ router.post('/', validateChannel, async (req: Request, res: Response) => {
 
     try {
         await createChannel(newChannel); 
-        res.sendStatus(201); 
+        res.status(201).send({
+            message: 'Channel created successfully'
+        }); 
     } catch (error) {
         console.log('Error inserting channel', error);
         res.sendStatus(400); 
