@@ -3,12 +3,13 @@ import "../css/signinForm.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export function RegisterForm() {
+export function RegisterForm({ toggleMode }: { toggleMode: () => void }) {
  
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [error, setError] = useState("");
+  const [message, setMessage] = useState("")
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -32,7 +33,13 @@ export function RegisterForm() {
       setUsername('')
       setPassword('')
       setConfirmPassword('')
-      navigate('/')
+      setMessage('User created successfully!')
+
+      setTimeout(() => {
+        toggleMode()
+        navigate("/");
+      }, 2000);
+     
 
     } catch (error) {
       setIsLoading(false);
@@ -87,7 +94,7 @@ export function RegisterForm() {
           required
         />
       </div>
-
+      {message && <p className="success">{message}</p>}
       <button type="submit" className="signin-btn">
         {isLoading ? "Creating new user..." : "Sign up"}
       </button>

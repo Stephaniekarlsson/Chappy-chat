@@ -37,7 +37,7 @@ export const LoginPage = () => {
                 {registerMode ? "Sign in" : "Sign up"}
               </p>
             </div>
-            {registerMode ? <RegisterForm /> : <SignInForm />}
+            {registerMode ? <RegisterForm toggleMode={toggleMode} /> : <SignInForm />}
           </div>
         </div>
       </section>
