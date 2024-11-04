@@ -32,6 +32,25 @@ router.get('/', async (req: Request, res: Response) => {
   }
 });
 
+router.get('/:username', async (req: Request, res: Response) => {
+  const { username } = req.params;
+
+  try {
+    const collection = await getDmMessagesCollection();
+
+    const senders = await collection.distinct('sender', { receiver: username });
+    const receivers = await collection.distinct('receiver', { sender: username });
+
+    const dmUsers = Array.from(new Set([...senders, ...receivers])); 
+    res.status(200).send(dmUsers);
+
+  } catch (error) {
+    console.error('Error fetching DM users:', error);
+    res.status(500)
+  }
+});
+
+
 router.post('/', async (req: Request, res: Response) => {
   const { sender, receiver, message } = req.body;
 

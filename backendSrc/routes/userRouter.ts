@@ -108,8 +108,8 @@ router.post('/', validateUser, async (req: Request, res: Response) => {
     };
 
     try {
-        await createUser(newUser); 
-        res.sendStatus(201); 
+        const insertedUser = await createUser(newUser); 
+        res.status(201).json(insertedUser); 
     } catch (error) {
         console.log('Error inserting user', error);
         res.sendStatus(400); 
