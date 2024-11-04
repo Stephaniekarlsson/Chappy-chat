@@ -12,6 +12,7 @@ interface ChannelDialogProps {
 export const CreateChannelDialog: React.FC<ChannelDialogProps> =({closeDialog}) => {
   const [newChannelName, setNewChannelName] = useState("");
   const [isLocked, setIsLocked] = useState(false);
+  const [channelImage, setChannelImage] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,6 +20,7 @@ export const CreateChannelDialog: React.FC<ChannelDialogProps> =({closeDialog}) 
     const channelData = {
       channel_name: newChannelName,
       isLocked: isLocked,
+      image: channelImage || null
     };
 
     console.log("Sending data:", JSON.stringify(channelData));
@@ -28,6 +30,7 @@ export const CreateChannelDialog: React.FC<ChannelDialogProps> =({closeDialog}) 
       await createChannel(channelData); 
       setNewChannelName("");
       setIsLocked(false);
+      setChannelImage(""); 
       closeDialog(); 
 
     } catch (error) {
@@ -50,6 +53,16 @@ export const CreateChannelDialog: React.FC<ChannelDialogProps> =({closeDialog}) 
               required
             />
           </label>
+          <label>
+            Image
+            <input
+              type="text"
+              placeholder="Image-URL (optionally)"
+              value={channelImage}
+              onChange={(e) => setChannelImage(e.target.value)}
+            />
+          </label>
+   
           <label>
             <input
               type="checkbox"
