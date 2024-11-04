@@ -6,5 +6,6 @@ export const channelModelSchema = Joi.object<ChannelModel>({
     .min(3)
     .max(25)
     .pattern(/^[a-zA-ZåäöÅÄÖ0-9 !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]*$/)
-    .required()
+    .required(),
+    isLocked: Joi.boolean().required(),
 })

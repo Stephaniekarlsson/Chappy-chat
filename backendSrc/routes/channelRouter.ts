@@ -53,6 +53,7 @@ router.get('/search-channels', async (req: Request, res: Response) => {
 });
 
 router.post('/', validateChannel, async (req: Request, res: Response) => {
+    
     const newChannel: ChannelModel = {
         ...req.body,
     };
