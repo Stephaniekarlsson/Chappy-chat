@@ -54,10 +54,11 @@ router.get('/search-channels', async (req: Request, res: Response) => {
 
 router.post('/', validateChannel, async (req: Request, res: Response) => {
     
+    const { img, ...channelData } = req.body;
     const newChannel: ChannelModel = {
-        ...req.body,
+        ...channelData,
+        img: img || 'https://i.postimg.cc/L5Lscf93/Designer-8.jpg'
     };
-
     try {
         await createChannel(newChannel); 
         res.status(201).send({
