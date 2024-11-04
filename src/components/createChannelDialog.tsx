@@ -2,6 +2,9 @@ import '../css/channelDialog.css'
 import { useState } from "react";
 import { IoLockClosedOutline } from 'react-icons/io5';
 import { createChannel } from '../api/channelApi';
+import { fetchChannels } from '../api/channelApi';
+import { useChannelStore } from '../data/channelStore';
+import { useTabStore } from '../data/tabStore';
 
 
 interface ChannelDialogProps {
@@ -10,6 +13,8 @@ interface ChannelDialogProps {
 
 
 export const CreateChannelDialog: React.FC<ChannelDialogProps> =({closeDialog}) => {
+  const setChannels = useChannelStore((state) => state.setChannels);
+  const setData = useTabStore((state) => state.setData);
   const [newChannelName, setNewChannelName] = useState("");
   const [isLocked, setIsLocked] = useState(false);
   const [channelImage, setChannelImage] = useState("");
@@ -20,14 +25,14 @@ export const CreateChannelDialog: React.FC<ChannelDialogProps> =({closeDialog}) 
     const channelData = {
       channel_name: newChannelName,
       isLocked: isLocked,
-      image: channelImage || null
+      image: channelImage || undefined
     };
-
-    console.log("Sending data:", JSON.stringify(channelData));
-    console.log("Channel Data before sending:", channelData);
 
     try {
       await createChannel(channelData); 
+      const updatedChannels = await fetchChannels(); 
+      setChannels(updatedChannels);
+      setData(updatedChannels);
       setNewChannelName("");
       setIsLocked(false);
       setChannelImage(""); 

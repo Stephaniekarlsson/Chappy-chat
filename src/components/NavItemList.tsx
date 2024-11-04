@@ -60,7 +60,7 @@ export const NavItemList: React.FC<NavItemListProps> = ({ closeNavbar }) => {
       </li>
       ))}
     </ul>
-    {activeTab === 'channels' && (
+    {activeTab === 'channels' && isAuthenticated && (
         <button className="add-channel-btn"
         onClick={openDialog}>
           <AiOutlinePlus className="add-channel-icon"/>
