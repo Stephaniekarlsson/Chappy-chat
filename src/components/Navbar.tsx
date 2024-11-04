@@ -13,7 +13,7 @@ import { fetchUsers } from "../api/userApi";
 
 export const Navbar = () => {
   const activeTab = useTabStore((state) => state.activeTab);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(true);
   const setIsAuthenticated = useUserStore((state) => state.setIsAuthenticated);
   const navigate = useNavigate();
   const setData = useTabStore((state) => state.setData);
@@ -30,6 +30,10 @@ export const Navbar = () => {
     localStorage.removeItem("token");
     setIsAuthenticated(false);
     navigate("/");
+  };
+
+  const closeNavbar = () => {
+    setIsOpen(false); 
   };
 
   useEffect(() => {
@@ -67,7 +71,7 @@ export const Navbar = () => {
             type="text"
             placeholder={`Search ${activeTab} `}
           />
-          <NavItemList />
+          <NavItemList closeNavbar={closeNavbar} />
           <div className="my-profile">
             <UserProfile />
           </div>

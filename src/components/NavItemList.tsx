@@ -3,7 +3,11 @@ import { useHandleChannelClick, useHandleDmUserClick } from "../functions/NavFun
 import { useTabStore } from "../data/tabStore";
 import { useUserStore } from "../data/UserStore";
 
-export const NavItemList = () => {
+interface NavItemListProps {
+  closeNavbar: () => void; 
+}
+
+export const NavItemList: React.FC<NavItemListProps> = ({ closeNavbar }) => {
   const data = useTabStore((state) => state.data); 
   const isAuthenticated = useUserStore((state) => state.isAuthenticated); 
   const { handleChannelClick } = useHandleChannelClick();
@@ -22,6 +26,7 @@ export const NavItemList = () => {
             } else {
               handleChannelClick(("_id" in item) ? item._id.toString() : ''); 
             }
+            closeNavbar()
           }
         }}
       >

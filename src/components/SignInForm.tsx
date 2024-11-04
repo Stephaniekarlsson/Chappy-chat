@@ -25,10 +25,8 @@ export function SignInForm() {
 
     try {
       const data: LoginResponse = await loginUser(username, password);
-      console.log("Received user data:", data);
 
       localStorage.setItem("token", data.jwt);
-      console.log("Successful login", data);
       localStorage.setItem(
         "user",
         JSON.stringify({ username: data.username, image: data.image || "" })

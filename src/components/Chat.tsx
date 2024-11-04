@@ -44,7 +44,7 @@ export const Chat = () => {
     
 
     useEffect(() => {
-      endOfMessagesRef.current?.scrollIntoView({ behavior: 'smooth' });
+      endOfMessagesRef.current?.scrollIntoView({ behavior: 'auto' });
   }, [filteredMessages]);
 
   return (

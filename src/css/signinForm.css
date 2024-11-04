@@ -24,7 +24,7 @@
     border: 2px solid var(--dark-blue);
     border-radius: 10px;
     padding: 0.5em;
-    margin-bottom: .5em;
+    margin-bottom: .8em;
 }
 
 .signin-btn {
@@ -35,6 +35,19 @@
     border-radius: 10px;
     align-self: center;
     margin-top: 0.5em;
+}
+
+.register-header {
+    font-size: 20px;
+    text-align: center;
+    color: var(--dark-blue);
+}
+
+.register-help {
+    font-size: 12px;
+    color: var(--blue);
+    margin-left: 5px;
+    margin-top: -5px;
 }
 
 @media (max-width: 800px) { 

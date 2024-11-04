@@ -110,8 +110,15 @@
     display: flex;
     gap: .5em;
     margin-top: auto; 
-    padding-bottom: 1em; 
+    padding-bottom: .4em; 
 }
+
+.my-profile > p {
+  color: var(--white-transp);
+  margin-left: .5em;
+  margin-bottom: 1em;
+}
+
 
 .item-row > p {
     color: var(--white-transp);

@@ -11,6 +11,11 @@ export interface LoginResponse {
   image?: string;
 }
 
+export type NewUser = {
+  username: string;
+  password: string;
+}
+
 export const fetchUsers = async (): Promise<User[]> => {
   try {
     const response = await fetch('/api/users');
@@ -45,3 +50,26 @@ export const loginUser = async (username: string, password: string): Promise<Log
       image: data.user.image,
   };
 };
+
+export const createUser = async (newUser: NewUser): Promise<User | null> => {
+  try {
+    const response = await fetch('/api/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newUser),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to create user');
+    }
+
+    const createdUser: User = await response.json();
+    return createdUser;
+  } catch (error) {
+    console.error('Error creating user:', error);
+    return null;
+  }
+};
+
