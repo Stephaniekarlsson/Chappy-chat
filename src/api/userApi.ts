@@ -16,6 +16,7 @@ export type NewUser = {
   password: string;
 }
 
+
 export const fetchUsers = async (): Promise<User[]> => {
   try {
     const response = await fetch('/api/users');

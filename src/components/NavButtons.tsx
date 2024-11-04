@@ -4,6 +4,8 @@ import { fetchUsers } from "../api/userApi";
 import { fetchChannels } from "../api/channelApi";
 import { useChannelStore } from "../data/channelStore";
 import { useHandleDmTabChange } from "../functions/NavFunctions";
+// import { AiOutlinePlus } from "react-icons/ai";
+
 
 export const NavButtons = () => {
   const activeTab = useTabStore((state) => state.activeTab);
