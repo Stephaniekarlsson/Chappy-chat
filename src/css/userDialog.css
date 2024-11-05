@@ -1,0 +1,79 @@
+.user-dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.user-dialog-container {
+  background: var(--white);
+  color: var(--dark-blue);
+  padding: .5em;
+  border-radius: 8px;
+  width: 300px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+
+.profile-img {
+  width: 4em;
+  height: 4em;
+  border-radius: 20%;
+}
+
+.username-container {
+  display: flex;
+  gap: .5em;
+  align-items: center;
+  justify-content: center;
+  margin-top: .3em;
+}
+
+.dialog-username {
+  color: var(--dark-blue);
+  font-size: 1.2em;
+}
+
+.user-dialog-btn-container {
+  display: flex;
+  gap: .5em;
+} 
+
+.user-display-btn {
+  color: var(--white-transp);
+  background-color: var(--dark-blue);
+  padding: .2em .5em;
+  border-radius: .8em;
+  margin-top: 1em;
+  width: fit-content
+}
+
+.dialog-img-container{
+  position: relative;
+}
+
+.add-profile-img {
+  background-color: var(--blue);
+  color: var(--white);
+  width: 1.3em;
+  height: 1.3em;
+  border-radius: 50%;
+  position: absolute;
+  top: 3em;
+  right: -.5em;
+}
+
+.add-img-icon {
+  margin-top: 3px;
+  margin-left: 3px;
+  font-size: 14px;
+}

@@ -4,7 +4,7 @@ import { useTabStore } from "../data/tabStore";
 import { useUserStore } from "../data/UserStore";
 import { AiOutlinePlus } from "react-icons/ai";
 import { useState } from "react";
-import { CreateChannelDialog } from "./createChannelDialog";
+import { CreateChannelDialog } from "./ChannelDialog.js";
 
 
 interface NavItemListProps {

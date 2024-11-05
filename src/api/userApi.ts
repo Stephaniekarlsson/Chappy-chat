@@ -74,3 +74,22 @@ export const createUser = async (newUser: NewUser): Promise<User | null> => {
   }
 };
 
+export const deleteUser = async (userId: number): Promise<void> => {
+  try {
+    const response = await fetch(`/api/users/${userId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to delete user');
+    }
+
+  } catch (error) {
+    console.error('Error deleting user:', error);
+  }
+};
+
+

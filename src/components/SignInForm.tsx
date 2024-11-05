@@ -6,6 +6,7 @@ import { loginUser } from "../api/userApi";
 
 interface LoginResponse {
   jwt: string;
+  _id?: string;
   username: string;
   image?: string;
 }
@@ -24,15 +25,16 @@ export function SignInForm() {
     setIsLoading(true);
 
     try {
-      const data: LoginResponse = await loginUser(username, password);
+      const data: LoginResponse = await loginUser(username, password );
 
       localStorage.setItem("token", data.jwt);
       localStorage.setItem(
         "user",
-        JSON.stringify({ username: data.username, image: data.image || "" })
+        JSON.stringify({ _id: data._id, username: data.username, image: data.image || "" })
       );
 
       const userData = {
+        _id: data._id,
         username: data.username,
         image: data.image || "",
       };
