@@ -77,3 +77,8 @@
   margin-left: 3px;
   font-size: 14px;
 }
+
+.dialog-message {
+  font-size: 1.5em;
+  color: var(--dark-blue);
+}

@@ -2,6 +2,7 @@ import { createUser } from "../api/userApi";
 import "../css/signinForm.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { fetchUsers } from "../api/userApi";
 
 export function RegisterForm({ toggleMode }: { toggleMode: () => void }) {
  
@@ -17,8 +18,17 @@ export function RegisterForm({ toggleMode }: { toggleMode: () => void }) {
     e.preventDefault();
     setIsLoading(true);
 
+    const checkUsers = await fetchUsers()
+
     if (password !== confirmPassword) {
       setError("Passwords do not match.");
+      setIsLoading(false);
+      return;
+    }
+
+    const usernameExists = checkUsers.some(user => user.username === username);
+    if (usernameExists) {
+      setError("Username unavailable.");
       setIsLoading(false);
       return;
     }
@@ -38,7 +48,7 @@ export function RegisterForm({ toggleMode }: { toggleMode: () => void }) {
       setTimeout(() => {
         toggleMode()
         navigate("/");
-      }, 2000);
+      }, 1500);
      
 
     } catch (error) {

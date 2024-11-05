@@ -10,9 +10,11 @@ export const LoginPage = () => {
   const setIsAuthenticated = useUserStore((state) => state.setIsAuthenticated);
   const navigate = useNavigate();
   const [registerMode, setRegisterMode] = useState(false)
+  const setUser = useUserStore((state) => state.setUser);
 
   const handleUseAsGuest = () => {
     setIsAuthenticated(false);
+    setUser(null)
     navigate("/guest");
   };
 

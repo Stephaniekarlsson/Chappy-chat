@@ -18,8 +18,9 @@ export const CreateUserDialog: React.FC<UserDialogProps> =({closeDialog}) => {
   const [message, setMessage] = useState<string | null>(null);
   const setIsAuthenticated = useUserStore((state) => state.setIsAuthenticated);
   const setUser = useUserStore((state) => state.setUser);
-
   const navigate = useNavigate()
+  const [wantDelete, setWantDelete] = useState(false)
+
 
   console.log('user data', user);
   
@@ -28,18 +29,28 @@ export const CreateUserDialog: React.FC<UserDialogProps> =({closeDialog}) => {
   if (!user) return null;
 
   const handleDelete = async () => {
+
     try {
       await deleteUser(user._id); 
       setMessage('Account deleted')
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
       setIsAuthenticated(false); 
       setUser(null);
-      navigate('/')
 
+      setTimeout(() => {
+        navigate("/");
+      }, 1500);
+    
     } catch (error) {
       setError('Failed to delete user. Please try again.'); 
       console.error('Error deleting user:', error);
     }
   };
+
+  const handleWantDelete = () => {
+    setWantDelete(true)
+  }
 
   return (
     <div className="user-dialog-overlay">
@@ -54,17 +65,29 @@ export const CreateUserDialog: React.FC<UserDialogProps> =({closeDialog}) => {
             <p className='dialog-username'>{user.username}</p>
             <FaUserEdit />
           </div>
-          {error && <p className="error-message">{error}</p>}
-          {message && <p className="success-message">{message}</p>}
+          {error && <p className="dialog-message">{error}</p>}
+          {message && <p className="dialog-message">{message}</p>}
           <div className="user-dialog-btn-container">
             <button className="user-display-btn"
-            onClick={handleDelete}>
+            onClick={handleWantDelete}>
               Delete account
             </button>
             <button className="user-display-btn"
             onClick={closeDialog}>
               Close
             </button>
+            {wantDelete && (
+              <>
+                <button className="user-display-btn"
+                onClick={handleDelete}>
+                Yes
+                </button>
+                <button className="user-display-btn"
+                onClick={closeDialog}>
+                No
+                </button>
+              </>
+            )}
           </div>
       </div>
     </div>
