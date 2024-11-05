@@ -75,7 +75,7 @@ router.post('/login', async (req: Request, res: Response) => {
       return
     }
 
-    const user = await getUserById('', req.body.username);
+    const user = await getUserById(userId, req.body.username);
 
     if (!user) {
         console.log("Invalid login attempt: User not found");
