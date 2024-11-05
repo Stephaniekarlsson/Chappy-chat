@@ -1,12 +1,13 @@
 
 export type User = { 
-  _id: number;
+  _id: string;
   username: string; 
   image: string
   role: 'user' | 'guest' };
 
 export interface LoginResponse {
   jwt: string;
+  _id: string;
   username: string;
   image?: string;
 }
@@ -47,6 +48,7 @@ export const loginUser = async (username: string, password: string): Promise<Log
   const data = await response.json();
   return {
       jwt: data.jwt,
+      _id: data.user._id,
       username: data.user.username,
       image: data.user.image,
   };
@@ -74,7 +76,7 @@ export const createUser = async (newUser: NewUser): Promise<User | null> => {
   }
 };
 
-export const deleteUser = async (userId: number): Promise<void> => {
+export const deleteUser = async (userId: string): Promise<void> => {
   try {
     const response = await fetch(`/api/users/${userId}`, {
       method: 'DELETE',
