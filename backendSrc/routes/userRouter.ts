@@ -56,8 +56,7 @@ router.get('/search-users', async (req: Request, res: Response) => {
 });
 
 router.post('/login', async (req: Request, res: Response) => {
-    console.log("entered POST/login");
-  
+
     if( !process.env.SECRET ) {
       res.sendStatus(500)
       return
@@ -88,12 +87,14 @@ router.post('/login', async (req: Request, res: Response) => {
     }
     
     const payload = {
-      userId
+      userId: user._id
     }
+
     const token: string = sign(payload, process.env.SECRET)
     res.send({ 
         jwt: token,
         user: {
+            _id: user._id,
             username: user.username,
             image: user.image || '',
         }
