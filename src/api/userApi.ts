@@ -76,12 +76,14 @@ export const createUser = async (newUser: NewUser): Promise<User | null> => {
   }
 };
 
-export const deleteUser = async (userId: string): Promise<void> => {
+export const deleteUser = async (_id: string): Promise<void> => {
   try {
-    const response = await fetch(`/api/users/${userId}`, {
+    const token = localStorage.getItem("token");
+    const response = await fetch(`/api/users/${_id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
       },
     });
 

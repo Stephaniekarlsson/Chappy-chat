@@ -4,7 +4,7 @@ import { FaUserEdit } from "react-icons/fa";
 import { AiOutlinePlus } from "react-icons/ai";
 import { deleteUser } from '../api/userApi';
 import { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { User } from '../api/userApi';
 
 
@@ -16,7 +16,10 @@ export const CreateUserDialog: React.FC<UserDialogProps> =({closeDialog}) => {
   const user = useUserStore((state) => state.user) as User | null;
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
-  // const navigate = useNavigate()
+  const setIsAuthenticated = useUserStore((state) => state.setIsAuthenticated);
+  const setUser = useUserStore((state) => state.setUser);
+
+  const navigate = useNavigate()
 
   console.log('user data', user);
   
@@ -28,7 +31,9 @@ export const CreateUserDialog: React.FC<UserDialogProps> =({closeDialog}) => {
     try {
       await deleteUser(user._id); 
       setMessage('Account deleted')
-      // navigate('/')
+      setIsAuthenticated(false); 
+      setUser(null);
+      navigate('/')
 
     } catch (error) {
       setError('Failed to delete user. Please try again.'); 
