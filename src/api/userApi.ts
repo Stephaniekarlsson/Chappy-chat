@@ -96,4 +96,20 @@ export const deleteUser = async (_id: string): Promise<void> => {
   }
 };
 
+export const updateUser = async (id: string, updatedData: Partial<User>): Promise<void> => {
+  const token = localStorage.getItem("token");
+  const response = await fetch(`/api/users/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+    body: JSON.stringify(updatedData),
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to update user');
+  }
+};
+
 
