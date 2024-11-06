@@ -9,7 +9,7 @@ import { validateLogin } from '../validation/validateLogin.js'
 
 const router: Router = express.Router()
 const { sign } = jwt
-const default_profile_img = 'https://i.postimg.cc/ncj2QZgK/Designer-6.jpg'
+const default_profile_img = 'https://i.postimg.cc/C5hXKtCL/Designer-10.jpg'
 
 
 
