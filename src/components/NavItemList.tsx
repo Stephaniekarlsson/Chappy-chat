@@ -5,6 +5,8 @@ import { useUserStore } from "../data/UserStore";
 import { AiOutlinePlus } from "react-icons/ai";
 import { useState } from "react";
 import { CreateChannelDialog } from "./ChannelDialog.js";
+import { fetchUsers, User } from "../api/userApi.js";
+import DmDialog from "./DmDialog.js";
 
 
 interface NavItemListProps {
@@ -14,18 +16,40 @@ interface NavItemListProps {
 export const NavItemList: React.FC<NavItemListProps> = ({ closeNavbar }) => {
   const data = useTabStore((state) => state.data); 
   const isAuthenticated = useUserStore((state) => state.isAuthenticated); 
+  const setUsers = useUserStore((state) => state.setUsers); 
+
   const { handleChannelClick } = useHandleChannelClick();
   const { handleDmUserClick } = useHandleDmUserClick();
   const activeTab = useTabStore((state) => state.activeTab);
   const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [isDmDialogOpen, setIsDmDialogOpen] = useState(false)
+
 
   const openDialog = () => {
     setIsDialogOpen(true);
+    setIsDialogOpen(true)
   };
 
   const closeDialog = () => {
     setIsDialogOpen(false)
+    setIsDmDialogOpen(false)
   }
+
+  const openDmDialog = async () => {
+    setIsDmDialogOpen(true)
+    const fetchedUsers = await fetchUsers()
+    setUsers(fetchedUsers)
+  };
+
+  const closeDmDialog = () => {
+    setIsDmDialogOpen(false)
+  }
+
+  const startNewDm = (reciver: User) => {
+    console.log("Starting new DM with:", reciver.username);
+    handleDmUserClick(reciver); 
+    closeNavbar();
+  };
 
 
   return (
@@ -67,13 +91,17 @@ export const NavItemList: React.FC<NavItemListProps> = ({ closeNavbar }) => {
         </button>
       )}
       {activeTab === 'dms' && isAuthenticated && (
-        <button className="add-new-dm">
+        <button className="add-new-dm" onClick={openDmDialog}>
           <AiOutlinePlus className="add-channel-icon"/>
         </button>
       )}
 
       {isDialogOpen && (
         <CreateChannelDialog closeDialog={closeDialog}/>
+      )}
+
+      {isDmDialogOpen && (
+        <DmDialog closeDmDialog={closeDmDialog} startNewDm={startNewDm} />
       )}
     </>
   );

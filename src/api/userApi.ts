@@ -2,8 +2,8 @@
 export type User = { 
   _id: string;
   username: string; 
-  image: string
-  role: 'user' | 'guest' };
+  image?: string
+  role?: 'user' | 'guest' };
 
 export interface LoginResponse {
   jwt: string;
