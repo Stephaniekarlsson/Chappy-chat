@@ -1,18 +1,20 @@
-import '../css/userDialog.css';
-import { useUserStore } from "../data/UserStore";
+import '../../css/userDialog.css'
+import { useUserStore } from "../../data/UserStore";
 import { FaUserEdit } from "react-icons/fa";
 import { AiOutlinePlus } from "react-icons/ai";
-import { deleteUser, fetchUsers, updateUser } from '../api/userApi';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { User } from '../api/userApi';
-import { useTabStore } from '../data/tabStore';
+import { deleteUser, fetchUsers, updateUser } from "../../api/userApi";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { User } from "../../api/userApi";
+import { useTabStore } from "../../data/tabStore";
 
 interface UserDialogProps {
   closeDialog: () => void;
 }
 
-export const CreateUserDialog: React.FC<UserDialogProps> = ({ closeDialog }) => {
+export const CreateUserDialog: React.FC<UserDialogProps> = ({
+  closeDialog,
+}) => {
   const user = useUserStore((state) => state.user) as User | null;
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
@@ -24,15 +26,15 @@ export const CreateUserDialog: React.FC<UserDialogProps> = ({ closeDialog }) => 
   const [wantDelete, setWantDelete] = useState(false);
   const [isEditingUsername, setIsEditingUsername] = useState(false);
   const [isEditingImage, setIsEditingImage] = useState(false);
-  const [username, setUsername] = useState(user?.username || '');
-  const [image, setImage] = useState(user?.image || '');
+  const [username, setUsername] = useState(user?.username || "");
+  const [image, setImage] = useState(user?.image || "");
 
   if (!user) return null;
 
   const handleDelete = async () => {
     try {
       await deleteUser(user._id);
-      setMessage('Account deleted');
+      setMessage("Account deleted");
       localStorage.removeItem("token");
       localStorage.removeItem("user");
       setIsAuthenticated(false);
@@ -42,8 +44,8 @@ export const CreateUserDialog: React.FC<UserDialogProps> = ({ closeDialog }) => 
         navigate("/");
       }, 1500);
     } catch (error) {
-      setError('Failed to delete user. Please try again.');
-      console.error('Error deleting user:', error);
+      setError("Failed to delete user. Please try again.");
+      console.error("Error deleting user:", error);
     }
   };
 
@@ -56,20 +58,20 @@ export const CreateUserDialog: React.FC<UserDialogProps> = ({ closeDialog }) => 
       const updatedUserData = { username, image };
       await updateUser(user._id, updatedUserData);
       setUser({ ...user, username, image });
-      setMessage('Profile updated successfully!');
+      setMessage("Profile updated successfully!");
       setIsEditingUsername(false);
       setIsEditingImage(false);
-      const updatedUserList = await fetchUsers()
-      setUsers(updatedUserList)
-      setData(updatedUserList)
+      const updatedUserList = await fetchUsers();
+      setUsers(updatedUserList);
+      setData(updatedUserList);
     } catch (error) {
-      setError('Failed to update profile. Please try again.');
-      console.error('Error updating user:', error);
+      setError("Failed to update profile. Please try again.");
+      console.error("Error updating user:", error);
     }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       handleUpdate();
     }
   };
@@ -78,7 +80,7 @@ export const CreateUserDialog: React.FC<UserDialogProps> = ({ closeDialog }) => 
     <div className="user-dialog-overlay">
       <div className="user-dialog-container">
         <div className="dialog-img-container">
-          <img className='profile-img' src={image} alt="profile" />
+          <img className="profile-img" src={image} alt="profile" />
           {isEditingImage ? (
             <div className="edit-section">
               <input
@@ -89,11 +91,16 @@ export const CreateUserDialog: React.FC<UserDialogProps> = ({ closeDialog }) => 
                 placeholder="Image URL"
                 className="edit-input"
               />
-              <button onClick={handleUpdate} className="save-button">Save</button>
+              <button onClick={handleUpdate} className="save-button">
+                Save
+              </button>
             </div>
           ) : (
-            <div className="add-profile-img" onClick={() => setIsEditingImage(true)}>
-              <AiOutlinePlus className='add-img-icon' />
+            <div
+              className="add-profile-img"
+              onClick={() => setIsEditingImage(true)}
+            >
+              <AiOutlinePlus className="add-img-icon" />
             </div>
           )}
         </div>
@@ -108,11 +115,13 @@ export const CreateUserDialog: React.FC<UserDialogProps> = ({ closeDialog }) => 
                 onKeyDown={handleKeyPress}
                 className="edit-input"
               />
-              <button onClick={handleUpdate} className="save-button">Save</button>
+              <button onClick={handleUpdate} className="save-button">
+                Save
+              </button>
             </div>
           ) : (
             <>
-              <p className='dialog-username'>{username}</p>
+              <p className="dialog-username">{username}</p>
               <FaUserEdit onClick={() => setIsEditingUsername(true)} />
             </>
           )}

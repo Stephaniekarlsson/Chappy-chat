@@ -1,12 +1,12 @@
 import { IoLockClosedOutline, IoLockOpenOutline } from "react-icons/io5";
-import { useHandleChannelClick, useHandleDmUserClick } from "../functions/NavFunctions";
-import { useTabStore } from "../data/tabStore";
-import { useUserStore } from "../data/UserStore";
+import { useHandleChannelClick, useHandleDmUserClick } from "../../functions/NavFunctions.js";
+import { useTabStore } from "../../data/tabStore.js";
+import { useUserStore } from "../../data/UserStore.js";
 import { AiOutlinePlus } from "react-icons/ai";
 import { useState } from "react";
-import { CreateChannelDialog } from "./ChannelDialog.js";
-import { fetchUsers, User } from "../api/userApi.js";
-import DmDialog from "./DmDialog.js";
+import { CreateChannelDialog } from "../channels/ChannelDialog.js";
+import { fetchUsers, User } from "../../api/userApi.js";
+import DmDialog from "../dms/DmDialog.js";
 
 
 interface NavItemListProps {
@@ -17,22 +17,18 @@ export const NavItemList: React.FC<NavItemListProps> = ({ closeNavbar }) => {
   const data = useTabStore((state) => state.data); 
   const isAuthenticated = useUserStore((state) => state.isAuthenticated); 
   const setUsers = useUserStore((state) => state.setUsers); 
-
-  const { handleChannelClick } = useHandleChannelClick();
-  const { handleDmUserClick } = useHandleDmUserClick();
   const activeTab = useTabStore((state) => state.activeTab);
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [isDmDialogOpen, setIsDmDialogOpen] = useState(false)
-
+  const { handleChannelClick } = useHandleChannelClick();
+  const { handleDmUserClick } = useHandleDmUserClick();
 
   const openDialog = () => {
     setIsDialogOpen(true);
-    setIsDialogOpen(true)
   };
 
   const closeDialog = () => {
     setIsDialogOpen(false)
-    setIsDmDialogOpen(false)
   }
 
   const openDmDialog = async () => {
@@ -46,7 +42,6 @@ export const NavItemList: React.FC<NavItemListProps> = ({ closeNavbar }) => {
   }
 
   const startNewDm = (reciver: User) => {
-    console.log("Starting new DM with:", reciver.username);
     handleDmUserClick(reciver); 
     closeNavbar();
   };

@@ -1,8 +1,8 @@
-import "../css/loginPage.css";
-import owl from "../assets/hi_owl3.png";
+import '../../css/loginPage.css'
+import owl from "../../assets/hi_owl3.png";
 import { SignInForm } from "./SignInForm";
 import { useNavigate } from "react-router-dom";
-import { useUserStore } from "../data/UserStore";
+import { useUserStore } from "../../data/UserStore";
 import { useState } from "react";
 import { RegisterForm } from "./RegisterForm";
 

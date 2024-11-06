@@ -1,8 +1,8 @@
-import "../css/signinForm.css";
+import '../../css/signinForm.css'
 import { useState } from "react";
-import { useUserStore } from "../data/UserStore";
+import { useUserStore } from "../../data/UserStore";
 import { useNavigate } from "react-router-dom";
-import { loginUser } from "../api/userApi";
+import { loginUser } from "../../api/userApi";
 
 interface LoginResponse {
   jwt: string;
@@ -34,7 +34,7 @@ export function SignInForm() {
       );
 
       const userData = {
-        _id: data._id,
+        _id: data._id ?? '',
         username: data.username,
         image: data.image || "",
       };

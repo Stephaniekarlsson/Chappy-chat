@@ -1,6 +1,6 @@
 import { createHashRouter } from 'react-router-dom'
 import App from '../App.js';
-import { LoginPage } from '../components/LoginPage.js'
+import { LoginPage } from '../components/login/LoginPage.js';
 import { GuestView } from '../components/GuestView.js';
 
 

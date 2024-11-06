@@ -1,8 +1,8 @@
-import { createUser } from "../api/userApi";
-import "../css/signinForm.css";
+import { createUser } from "../../api/userApi";
+import "../../css/signinForm.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchUsers } from "../api/userApi";
+import { fetchUsers } from "../../api/userApi";
 
 export function RegisterForm({ toggleMode }: { toggleMode: () => void }) {
  

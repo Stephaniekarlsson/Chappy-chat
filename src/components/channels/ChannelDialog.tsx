@@ -1,10 +1,10 @@
-import '../css/channelDialog.css'
+import '../../css/channelDialog.css'
 import { useState } from "react";
 import { IoLockClosedOutline } from 'react-icons/io5';
-import { createChannel } from '../api/channelApi';
-import { fetchChannels } from '../api/channelApi';
-import { useChannelStore } from '../data/channelStore';
-import { useTabStore } from '../data/tabStore';
+import { createChannel } from '../../api/channelApi';
+import { fetchChannels } from '../../api/channelApi';
+import { useChannelStore } from '../../data/channelStore';
+import { useTabStore } from '../../data/tabStore';
 
 
 interface ChannelDialogProps {

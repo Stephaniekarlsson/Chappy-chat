@@ -1,26 +1,25 @@
-import "../css/navbar.css";
+import '../../css/navbar.css'
 import { RiLogoutCircleLine } from "react-icons/ri";
 import { useState, useEffect } from "react";
 import { RiMenu2Fill } from "react-icons/ri";
-import { useUserStore } from "../data/UserStore";
+import { useUserStore } from "../../data/UserStore";
 import { useNavigate } from "react-router-dom";
-import { useTabStore } from "../data/tabStore";
+import { useTabStore } from "../../data/tabStore";
 import { NavButtons } from "./NavButtons";
 import { NavItemList } from "./NavItemList";
-import { UserProfile } from "./UserProfile";
-import { useCheckAuthStatus } from "../functions/NavFunctions";
-import { fetchUsers } from "../api/userApi";
+import { UserProfile } from "../users/UserProfile";
+import { useCheckAuthStatus } from "../../functions/NavFunctions";
+import { fetchUsers } from "../../api/userApi";
 
 export const Navbar = () => {
   const activeTab = useTabStore((state) => state.activeTab);
-  const [isOpen, setIsOpen] = useState<boolean>(true);
   const setIsAuthenticated = useUserStore((state) => state.setIsAuthenticated);
-  const navigate = useNavigate();
-  const setData = useTabStore((state) => state.setData);
   const data = useTabStore((state) => state.data);
+  const setData = useTabStore((state) => state.setData);
+  const [isOpen, setIsOpen] = useState<boolean>(true);
+  const navigate = useNavigate();
 
-  
-  useCheckAuthStatus(); 
+  useCheckAuthStatus();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -33,7 +32,7 @@ export const Navbar = () => {
   };
 
   const closeNavbar = () => {
-    setIsOpen(false); 
+    setIsOpen(false);
   };
 
   useEffect(() => {

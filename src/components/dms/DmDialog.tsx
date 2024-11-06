@@ -1,7 +1,7 @@
-import '../css/dmDialog.css';
+import '../../css/dmDialog.css'
 import React, { useState } from 'react';
-import { useUserStore } from '../data/UserStore.js';
-import { User } from '../api/userApi.js';
+import { useUserStore } from '../../data/UserStore.js';
+import { User } from '../../api/userApi.js';
 
 interface NewDmProps {
   closeDmDialog: () => void;
