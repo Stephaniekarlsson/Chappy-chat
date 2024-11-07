@@ -23,9 +23,32 @@
     height: 3.5em;
     border: 2px solid var(--dark-blue);
     border-radius: 10px;
-    padding: 0.5em;
+    padding: 0.5em 1em 0.5em 0.5em;
     margin-bottom: .8em;
+    flex-grow: 1;
+    
 }
+
+.password-container {
+    position: relative;
+    display: flex; 
+    width: 100%; 
+}
+
+.toggle-password-btn {
+    position: absolute;
+    right: 12px; 
+    top: 45%;
+    transform: translateY(-50%); 
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+
+  .toggle-password-btn svg {
+    font-size: 18px;
+    color: #000; 
+  }
 
 .signin-btn {
     background-color: var(--dark-blue);

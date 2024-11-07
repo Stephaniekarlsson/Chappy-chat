@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchUsers } from "../../api/userApi";
 import { validatePassword } from '../../functions/userFunctions';
+import { RxEyeClosed, RxEyeOpen } from "react-icons/rx";
 
 export function RegisterForm({ toggleMode }: { toggleMode: () => void }) {
  
@@ -16,6 +17,7 @@ export function RegisterForm({ toggleMode }: { toggleMode: () => void }) {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const [errorUsername, setErrorUsername] = useState("");
+  const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
 
 
   const handleRegister = async (e: React.FormEvent): Promise<void> => {
@@ -95,27 +97,45 @@ export function RegisterForm({ toggleMode }: { toggleMode: () => void }) {
 
       <div className="login-input-container">
         <label>Password</label>
-        <input
-          className="signin-input"
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+        <div className="password-container">
+          <input
+            className="signin-input"
+            type={passwordVisible ? 'text' : 'password'}
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <button
+            type="button"
+            className="toggle-password-btn"
+            onClick={() => setPasswordVisible(!passwordVisible)}
+          >
+            {passwordVisible ? <RxEyeClosed /> : <RxEyeOpen />} 
+          </button>
+        </div>
         <p className="register-help">At least 8 characters, 1 capital, 1 lowercase, 1 digit, 1 special character  </p>
       </div>
 
       <div className="login-input-container">
         <label>Confirm Password</label>
-        <input
-          className="signin-input"
-          type="password"
-          placeholder="Confirm Password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          required
-        />
+        <div className="password-container">
+          <input
+            className="signin-input"
+            type={passwordVisible ? 'text' : 'password'}
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+          />
+          <button
+            type="button"
+            className="toggle-password-btn"
+            onClick={() => setPasswordVisible(!passwordVisible)}
+          >
+            {passwordVisible ? <RxEyeClosed /> : <RxEyeOpen />} 
+          </button>
+        </div>
         {errorPassword && <p className="error-password">{errorPassword}</p>}
       </div>
       {message && <p className="success-message">{message}</p>}
