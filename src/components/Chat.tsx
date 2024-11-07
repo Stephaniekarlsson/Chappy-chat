@@ -18,6 +18,7 @@ export const Chat = () => {
   const currentUser = useUserStore((state) => state.user?.username) || 'Guest';
   const currentDmUser = useMessageStore((state) => state.currentDmUser);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const users = useUserStore((state) => state.users);
 
   const filteredMessages = currentDmUser
   ? messages.filter((message): message is DmMessage => {
@@ -48,10 +49,11 @@ export const Chat = () => {
       }
     };
   
+    const getUserInfo = (sender: string) => {
+      const user = users.find(user => user.username === sender);
+      return user ? { image: user.image, username: user.username } : { image: 'https://i.postimg.cc/C5hXKtCL/Designer-10.jpg', username: sender };
+    };
     
-    
-    
-
     useEffect(() => {
       endOfMessagesRef.current?.scrollIntoView({ behavior: 'auto' });
   }, [filteredMessages]);
@@ -70,10 +72,10 @@ export const Chat = () => {
               className="message-wrapper"
             >
               <div className="message-info">
-                {msg.sender !== currentUser && 'img' in msg && (
+                {msg.sender !== currentUser && (
                   <>
-                    <img src={msg.img} alt='' className="profile-image" />
-                    <p className="username">{'username' in msg ? msg.username : msg.sender}</p>
+                    <img src={getUserInfo(msg.sender).image} alt='' className="profile-image" />
+                    <p className="username">{getUserInfo(msg.sender).username}</p>
                   </>
                 )}
               </div>

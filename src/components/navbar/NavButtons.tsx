@@ -33,9 +33,17 @@ export const NavButtons = () => {
         const channels = await fetchChannels();
         setChannels(channels);
         setData(channels);
+          if (user) {  
+            const users = await filteredUsers(user._id);
+            setUsers(users);
+          }
       } else if (tab === "dms") {
         if (user) {
           await handleDmTabChange(); 
+          if (user) {  
+            const users = await filteredUsers(user._id);
+            setUsers(users);
+          }
         }
       }
     } catch (error) {

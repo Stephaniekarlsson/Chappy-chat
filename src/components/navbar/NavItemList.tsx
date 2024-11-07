@@ -8,6 +8,7 @@ import { CreateChannelDialog } from "../channels/ChannelDialog.js";
 import { User } from "../../api/userApi.js";
 import DmDialog from "../dms/DmDialog.js";
 import { filteredUsers } from "../../functions/userFunctions.js";
+import { getDmUserInfo } from "../../functions/userFunctions.js";
 
 
 interface NavItemListProps {
@@ -33,13 +34,13 @@ export const NavItemList: React.FC<NavItemListProps> = ({ closeNavbar }) => {
     setIsDialogOpen(false)
   }
 
-  const openDmDialog = async () => {
-    if (user) { 
-      setIsDmDialogOpen(true);
-      const fetchedUsers = await filteredUsers(user._id);
-      setUsers(fetchedUsers);
-    }
-  };
+const openDmDialog = async () => {
+  if (user) { 
+    setIsDmDialogOpen(true);
+    const fetchedUsers = await filteredUsers(user._id);
+    setUsers(fetchedUsers);
+  }
+};
 
   const closeDmDialog = () => {
     setIsDmDialogOpen(false)
@@ -48,6 +49,15 @@ export const NavItemList: React.FC<NavItemListProps> = ({ closeNavbar }) => {
   const startNewDm = (reciver: User) => {
     handleDmUserClick(reciver); 
     closeNavbar();
+  };
+
+  const getImage = (item: any) => {
+    if ('username' in item) {
+      const { image } = getDmUserInfo(item.username); 
+      return image || 'https://i.postimg.cc/C5hXKtCL/Designer-10.jpg';
+    } else if ('channel_name' in item) { 
+      return item.image || 'https://i.postimg.cc/L5Lscf93/Designer-8.jpg'; 
+    }
   };
 
 
@@ -69,11 +79,12 @@ export const NavItemList: React.FC<NavItemListProps> = ({ closeNavbar }) => {
           }
         }}
       >
-        <img 
-          src={("image" in item) ? item.image : 'default-image-url.jpg'} 
-          className="item-image" 
-          alt="" 
-        />
+            <img 
+              src={getImage(item)}
+              className="item-image" 
+              alt="profile image" 
+            />
+
         {"username" in item ? item.username : item.channel_name}
         {("isLocked" in item) && (
           <span className="lock-icon">
