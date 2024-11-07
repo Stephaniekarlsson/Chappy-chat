@@ -58,6 +58,12 @@ export const Chat = () => {
       endOfMessagesRef.current?.scrollIntoView({ behavior: 'auto' });
   }, [filteredMessages]);
 
+  const handlePressEnter = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !isLoading) {
+      handleSend();
+    }
+  };
+
   return (
     <>
     <section className='chat-section'>
@@ -96,6 +102,7 @@ export const Chat = () => {
           type='text'
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
+          onKeyDown={handlePressEnter}
           placeholder='Write a message...'
         />
         <button onClick={handleSend}
