@@ -3,6 +3,8 @@ import { useState } from "react";
 import { useUserStore } from "../../data/UserStore";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../../api/userApi";
+import { filteredUsers } from '../../functions/userFunctions';
+import { useTabStore } from '../../data/tabStore';
 
 interface LoginResponse {
   jwt: string;
@@ -18,6 +20,9 @@ export function SignInForm() {
   const [error, setError] = useState<string | null>(null);
   const setIsAuthenticated = useUserStore((state) => state.setIsAuthenticated);
   const setUser = useUserStore((state) => state.setUser);
+  const setData = useTabStore((state) => state.setData);
+  const setUsers = useUserStore((state) => state.setUsers);
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
@@ -41,6 +46,9 @@ export function SignInForm() {
 
       setIsAuthenticated(true);
       setUser(userData);
+      const filteredData = await filteredUsers(data._id ?? '')
+      setUsers(filteredData); 
+      setData(filteredData)
       setUsername("");
       setPassword("");
       navigate("/guest");
