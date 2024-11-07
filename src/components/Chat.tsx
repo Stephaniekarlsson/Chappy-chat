@@ -8,6 +8,7 @@ import { DmMessage } from '../api/dmApi';
 
 import { handleSendDm } from '../functions/ChatFunctions';
 import { handleSendChannelMessage } from '../functions/ChatFunctions';
+import { BsSendSlash } from "react-icons/bs";
 
 export const Chat = () => {
 
@@ -16,7 +17,7 @@ export const Chat = () => {
   const endOfMessagesRef = useRef<HTMLDivElement>(null)
   const currentUser = useUserStore((state) => state.user?.username) || 'Guest';
   const currentDmUser = useMessageStore((state) => state.currentDmUser);
-
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const filteredMessages = currentDmUser
   ? messages.filter((message): message is DmMessage => {
@@ -32,13 +33,21 @@ export const Chat = () => {
 
     const handleSend = async () => {
       if (inputValue.trim()) {
-        if (currentDmUser) {
-          await handleSendDm(inputValue, setInputValue, currentUser, currentDmUser, setMessages);
-        } else if (currentChannelId) {
-          await handleSendChannelMessage(inputValue, setInputValue, currentUser, currentChannelId, setMessages);
+        setIsLoading(true); 
+        try {
+          if (currentDmUser) {
+            await handleSendDm(inputValue, setInputValue, currentUser, currentDmUser, setMessages);
+          } else if (currentChannelId) {
+            await handleSendChannelMessage(inputValue, setInputValue, currentUser, currentChannelId, setMessages);
+          }
+        } catch (error) {
+          console.error("Error sending message:", error);
+        } finally {
+          setIsLoading(false); 
         }
       }
     };
+  
     
     
     
@@ -87,7 +96,10 @@ export const Chat = () => {
           onChange={(e) => setInputValue(e.target.value)}
           placeholder='Write a message...'
         />
-        <button onClick={handleSend}><LuSendHorizonal className='send-icon'/></button>
+        <button onClick={handleSend}
+        disabled={isLoading}>
+          {isLoading ? <BsSendSlash className='send-icon' /> : <LuSendHorizonal className='send-icon' />}
+          </button>
       </div>
     </section>
     </>
