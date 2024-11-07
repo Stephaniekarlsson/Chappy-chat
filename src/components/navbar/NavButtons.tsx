@@ -4,6 +4,7 @@ import { fetchChannels } from "../../api/channelApi";
 import { useChannelStore } from "../../data/channelStore";
 import { useHandleDmTabChange } from "../../functions/NavFunctions";
 import { filteredUsers } from "../../functions/userFunctions";
+import { useState } from "react";
 
 export const NavButtons = () => {
   const activeTab = useTabStore((state) => state.activeTab);
@@ -14,27 +15,34 @@ export const NavButtons = () => {
   const setUsers = useUserStore((state) => state.setUsers);
   const setChannels = useChannelStore((state) => state.setChannels);
   const { handleDmTabChange } = useHandleDmTabChange(); 
+  const [isLoading, setIsLoading] = useState<string | null>(null);
 
 
   const handleTabChange = async (tab: "users" | "channels" | "dms") => {
     setActiveTab(tab);
+    setIsLoading(tab); 
 
-    if (tab === "users") {
-      if (user) { 
-        const users = await filteredUsers(user._id);
-        setUsers(users);
-        setData(users);
+    try {
+      if (tab === "users") {
+        if (user) {
+          const users = await filteredUsers(user._id); 
+          setUsers(users);
+          setData(users);
+        }
+      } else if (tab === "channels") {
+        const channels = await fetchChannels();
+        setChannels(channels);
+        setData(channels);
+      } else if (tab === "dms") {
+        if (user) {
+          await handleDmTabChange(); 
+        }
       }
-    } else if (tab === "channels") {
-      const channels = await fetchChannels();
-      setChannels(channels)
-      setData(channels);
-    } else if (tab === "dms") {
-      if (user) {
-        await handleDmTabChange()
-      } 
+    } catch (error) {
+      console.error("Error while changing tab:", error);
+    } finally {
+      setIsLoading(null); 
     }
-    
   };
 
   return (
@@ -42,21 +50,28 @@ export const NavButtons = () => {
       <button
         className={`nav-btn ${activeTab === "users" ? "active" : ""}`}
         onClick={() => handleTabChange("users")}
+        disabled={isLoading === "users"}
       >
-        Users
+        {isLoading === 'users' ? 'Wait...' : 'Users'}
       </button>
       <button
         className={`nav-btn ${activeTab === "channels" ? "active" : ""}`}
         onClick={() => handleTabChange("channels")}
+        disabled={isLoading === "channels"}
+
       >
-        Channels
+        {isLoading === 'channels' ? 'Wait...' : 'Channels'}
+        
       </button>
       {isAuthenticated && (
         <button
           className={`nav-btn ${activeTab === "dms" ? "active" : ""}`}
           onClick={() => handleTabChange("dms")}
+          disabled={isLoading === "dms"}
+
         >
-          DM
+        {isLoading === 'dms' ? 'Wait...' : 'DM'}
+  
         </button>
       )}
     </div>
