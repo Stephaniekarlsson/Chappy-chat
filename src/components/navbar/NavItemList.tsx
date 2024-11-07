@@ -9,6 +9,7 @@ import { User } from "../../api/userApi.js";
 import DmDialog from "../dms/DmDialog.js";
 import { filteredUsers } from "../../functions/userFunctions.js";
 import { getDmUserInfo } from "../../functions/userFunctions.js";
+import { TbMessageCircleUser } from "react-icons/tb";
 
 
 interface NavItemListProps {
@@ -63,6 +64,19 @@ const openDmDialog = async () => {
 
   return (
     <>
+      {/* {activeTab === 'dms' && isAuthenticated && (
+        <button className="add-new-dm" onClick={openDmDialog}>
+          <TbMessageCircleUser  className="add-dm-icon"/>
+        </button>
+      )} */}
+        {activeTab === 'dms' && isAuthenticated && (
+          <div className="dm-icon-container"
+          onClick={openDmDialog}>
+            <p className="add-dm-p">New message</p>
+            <TbMessageCircleUser  className="add-dm-icon"
+/>
+          </div>
+      )}
     <ul>
       {data.map((item) => (
         <li
@@ -97,11 +111,6 @@ const openDmDialog = async () => {
       {activeTab === 'channels' && isAuthenticated && (
         <button className="add-channel-btn"
         onClick={openDialog}>
-          <AiOutlinePlus className="add-channel-icon"/>
-        </button>
-      )}
-      {activeTab === 'dms' && isAuthenticated && (
-        <button className="add-new-dm" onClick={openDmDialog}>
           <AiOutlinePlus className="add-channel-icon"/>
         </button>
       )}
