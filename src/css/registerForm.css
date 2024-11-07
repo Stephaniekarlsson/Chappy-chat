@@ -1,0 +1,20 @@
+
+.username-help-container {
+  display: flex;
+  text-align: left;
+  width: 100%;
+  gap: .5em;
+}
+
+.error-username, .error-password {
+  text-align: center;
+  color: rgb(124, 2, 2);
+  font-size: 12px;
+  margin-top: -5px;
+}
+
+.success-message {
+  text-align: center;
+  margin-top: -5px;
+  color: var(--dark-blue);
+}
