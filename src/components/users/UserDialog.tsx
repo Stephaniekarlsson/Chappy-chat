@@ -2,11 +2,12 @@ import '../../css/userDialog.css'
 import { useUserStore } from "../../data/UserStore";
 import { FaUserEdit } from "react-icons/fa";
 import { AiOutlinePlus } from "react-icons/ai";
-import { deleteUser, fetchUsers, updateUser } from "../../api/userApi";
+import { deleteUser, updateUser } from "../../api/userApi";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { User } from "../../api/userApi";
 import { useTabStore } from "../../data/tabStore";
+import { filteredUsers } from '../../functions/userFunctions';
 
 interface UserDialogProps {
   closeDialog: () => void;
@@ -61,7 +62,7 @@ export const CreateUserDialog: React.FC<UserDialogProps> = ({
       setMessage("Profile updated successfully!");
       setIsEditingUsername(false);
       setIsEditingImage(false);
-      const updatedUserList = await fetchUsers();
+      const updatedUserList =  await filteredUsers(user._id);
       setUsers(updatedUserList);
       setData(updatedUserList);
     } catch (error) {

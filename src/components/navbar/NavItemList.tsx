@@ -5,8 +5,9 @@ import { useUserStore } from "../../data/UserStore.js";
 import { AiOutlinePlus } from "react-icons/ai";
 import { useState } from "react";
 import { CreateChannelDialog } from "../channels/ChannelDialog.js";
-import { fetchUsers, User } from "../../api/userApi.js";
+import { User } from "../../api/userApi.js";
 import DmDialog from "../dms/DmDialog.js";
+import { filteredUsers } from "../../functions/userFunctions.js";
 
 
 interface NavItemListProps {
@@ -17,6 +18,7 @@ export const NavItemList: React.FC<NavItemListProps> = ({ closeNavbar }) => {
   const data = useTabStore((state) => state.data); 
   const isAuthenticated = useUserStore((state) => state.isAuthenticated); 
   const setUsers = useUserStore((state) => state.setUsers); 
+  const user = useUserStore((state) => state.user); 
   const activeTab = useTabStore((state) => state.activeTab);
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [isDmDialogOpen, setIsDmDialogOpen] = useState(false)
@@ -32,9 +34,11 @@ export const NavItemList: React.FC<NavItemListProps> = ({ closeNavbar }) => {
   }
 
   const openDmDialog = async () => {
-    setIsDmDialogOpen(true)
-    const fetchedUsers = await fetchUsers()
-    setUsers(fetchedUsers)
+    if (user) { 
+      setIsDmDialogOpen(true);
+      const fetchedUsers = await filteredUsers(user._id);
+      setUsers(fetchedUsers);
+    }
   };
 
   const closeDmDialog = () => {

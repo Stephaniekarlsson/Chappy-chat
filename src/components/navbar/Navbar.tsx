@@ -9,13 +9,14 @@ import { NavButtons } from "./NavButtons";
 import { NavItemList } from "./NavItemList";
 import { UserProfile } from "../users/UserProfile";
 import { useCheckAuthStatus } from "../../functions/NavFunctions";
-import { fetchUsers } from "../../api/userApi";
+import { filteredUsers } from '../../functions/userFunctions';
 
 export const Navbar = () => {
   const activeTab = useTabStore((state) => state.activeTab);
   const setIsAuthenticated = useUserStore((state) => state.setIsAuthenticated);
   const data = useTabStore((state) => state.data);
   const setData = useTabStore((state) => state.setData);
+  const user = useUserStore((state) => state.user);
   const [isOpen, setIsOpen] = useState<boolean>(true);
   const navigate = useNavigate();
 
@@ -37,14 +38,14 @@ export const Navbar = () => {
 
   useEffect(() => {
     const loadData = async () => {
-      if (activeTab === "users" && data.length === 0) {
-        const fetchedUsers = await fetchUsers();
-        setData(fetchedUsers);
+      if (activeTab === "users" && data.length === 0 && user) {
+        const filteredData = await filteredUsers(user._id);
+        setData(filteredData);
       }
     };
 
     loadData();
-  }, [activeTab, data.length, setData]);
+  }, [activeTab, data.length, setData, user]);
 
   return (
     <>
