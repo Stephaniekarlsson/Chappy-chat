@@ -54,7 +54,7 @@ export function SignInForm() {
       navigate("/guest");
     } catch (error) {
       setIsLoading(false);
-      setError("Something went wrong. Please try again later.");
+      setError("Wrong username or password, try again!.");
       console.error(error);
     } finally {
       setIsLoading(false);
@@ -63,7 +63,6 @@ export function SignInForm() {
 
   return (
     <form className="form-container" onSubmit={handleSubmit}>
-      {error && <p className="error">{error}</p>}
       <div className="login-input-container">
         <label>Username</label>
         <input
@@ -87,7 +86,7 @@ export function SignInForm() {
           required
         />
       </div>
-
+      {error && <p className="error">{error}</p>}
       <button type="submit" className="signin-btn">
         {isLoading ? "Signing in..." : "Sign in"}
       </button>

@@ -53,6 +53,8 @@
 .error {
     text-align: center;
     color: rgb(124, 2, 2);
+    font-size: 12px;
+    margin-top: -5px;
 }
 
 @media (max-width: 800px) { 
