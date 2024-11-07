@@ -1,7 +1,8 @@
 import '../../css/dmDialog.css'
-import React, { useState } from 'react';
+import React from 'react';
 import { useUserStore } from '../../data/UserStore.js';
 import { User } from '../../api/userApi.js';
+import { getDmUserInfo } from '../../functions/userFunctions.js';
 
 interface NewDmProps {
   closeDmDialog: () => void;
@@ -10,17 +11,15 @@ interface NewDmProps {
 
 const DmDialog: React.FC<NewDmProps> = ({ closeDmDialog, startNewDm }) => {
   const users = useUserStore((state) => state.users);
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
-  const handleSelectUser = (user: User) => {
-    setSelectedUser(user);
+  const handleStartChat = (user: User) => {
+      startNewDm(user);
+      closeDmDialog();
   };
 
-  const handleStartChat = () => {
-    if (selectedUser) {
-      startNewDm(selectedUser);
-      closeDmDialog();
-    }
+  const getImage = (username: string) => {
+    const { image } = getDmUserInfo(username);
+    return image
   };
 
   return (
@@ -29,17 +28,18 @@ const DmDialog: React.FC<NewDmProps> = ({ closeDmDialog, startNewDm }) => {
         <h2>Select a user to start a conversation</h2>
         <ul>
           {users.map((user) => (
-            <li key={user._id} onClick={() => handleSelectUser(user)}>
-              {user.username}
+            <li key={user._id} onClick={() => handleStartChat(user)}>
+              <div className="dm-user-info">
+                  <img 
+                  src={getImage(user.username)} 
+                  alt={user.username} 
+                  className="user-image" 
+                />
+                {user.username}
+              </div>
             </li>
           ))}
         </ul>
-        {selectedUser && (
-          <div>
-            <h3>You selected: {selectedUser.username}</h3>
-            <button onClick={handleStartChat}>Start DM</button>
-          </div>
-        )}
         <button onClick={closeDmDialog}>Cancel</button>
       </div>
     </div>
