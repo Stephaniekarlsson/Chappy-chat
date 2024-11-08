@@ -49,35 +49,42 @@ export const CreateChannelDialog: React.FC<ChannelDialogProps> =({closeDialog}) 
       <div className="dialog-container">
         <h2>Create New Channel</h2>
         <form className='new-channel-form' onSubmit={handleSubmit}>
-          <label>
-            Channel Name:
+          <div className="channel-input-container">
+            <label>
+              Channel Name:
+            </label>
             <input
               type="text"
               value={newChannelName}
               onChange={(e) => setNewChannelName(e.target.value)}
               required
-            />
-          </label>
-          <label>
-            Image
+              />
+          </div>
+          <div className="channel-input-container">
+            <label>
+              Image:
+            </label>
             <input
               type="text"
               placeholder="Image-URL (optionally)"
               value={channelImage}
               onChange={(e) => setChannelImage(e.target.value)}
-            />
-          </label>
+              />
+          </div>
    
-          <label>
+          <div className="lock-channel-container">
+            <p>Lock channel</p>
+            <IoLockClosedOutline className='channel-lock-icon'/>
             <input
               type="checkbox"
+              className='channel-checkbox'
               checked={isLocked}
               onChange={() => setIsLocked(!isLocked)}
-            />
-            <IoLockClosedOutline/>
-          </label>
-          <button className='channel-display-btn' type="submit">Create Channel</button>
-          <button className='channel-display-btn' type="button"
+              />
+          </div>
+       
+          <button className='channel-btn' type="submit">Create Channel</button>
+          <button className='channel-btn' type="button"
           onClick={closeDialog}>Cancel</button>
         </form>
       </div>

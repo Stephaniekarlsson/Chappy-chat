@@ -64,11 +64,6 @@ const openDmDialog = async () => {
 
   return (
     <>
-      {/* {activeTab === 'dms' && isAuthenticated && (
-        <button className="add-new-dm" onClick={openDmDialog}>
-          <TbMessageCircleUser  className="add-dm-icon"/>
-        </button>
-      )} */}
         {activeTab === 'dms' && isAuthenticated && (
           <div className="dm-icon-container"
           onClick={openDmDialog}>

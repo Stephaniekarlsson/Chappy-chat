@@ -25,3 +25,50 @@
   display: flex;
   flex-direction: column;
 }
+
+.channel-input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: .8em;
+}
+
+.channel-input-container > input {
+  width: 90%;
+  padding: .5em;
+  border-radius: .5em;
+  border: 1px solid var(--dark);
+}
+
+.channel-input-container > label {
+  align-self: flex-start;
+  margin-left: 1em;
+  font-size: 15px;
+}
+
+.lock-channel-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: .5em .5em .2em .5em;  
+}
+
+.channel-lock-icon {
+  font-size: 1em;
+}
+
+.channel-checkbox {
+  width: 14px;
+  height: 14px;
+  margin-left: .5em;
+}
+
+.channel-btn {
+  width: 50%;
+  align-self: center;
+  margin-top: .5em;
+  padding: .4em;
+  border-radius: .5em;
+  background-color: var(--dark-blue);
+  color: var(--white-transp);
+}
