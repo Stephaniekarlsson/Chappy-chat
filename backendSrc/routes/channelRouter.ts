@@ -6,6 +6,7 @@ import { createChannel, createChannelMessage } from '../functions/channelFunctio
 import { validateChannel } from '../validation/validateFunctions.js'
 import { getMessagesByChannelId } from '../functions/channelFunctions.js'
 import { MessageModel } from '../models/messageModel.js'
+import { getChannelMessagesCollection } from '../connect.js'
 
 
 const router: Router = express.Router()
@@ -161,6 +162,35 @@ router.post('/:channelId/messages', async (req: Request, res: Response) => {
         res.status(500).send({
             error: 'Failed to create message'
         }); 
+    }
+});
+
+router.delete('/:channelId/messages/:sender', async (req: Request, res: Response) => {
+    const { channelId, sender } = req.params;
+
+    try {
+        if (!channelId || channelId.trim() === '') {
+            res.status(400).send({ error: 'No channel id' });
+            return;
+        }
+
+        const messagesCol = await getChannelMessagesCollection()
+
+        const deleteResult = await messagesCol.deleteMany({
+            channel_id: channelId,
+            sender: sender,
+        });
+
+        if (deleteResult.deletedCount === 0) {
+            res.status(404).send({ error: 'No messages found to delete' });
+            return;
+        }
+
+        res.status(200).send({ message: 'Messages deleted successfully' });
+
+    } catch (error) {
+        console.error('Error rendering messages', error);
+        res.status(500).send({ error: 'No messages deleted' });
     }
 });
 
