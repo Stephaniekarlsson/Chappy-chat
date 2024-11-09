@@ -29,6 +29,8 @@ export const useCheckAuthStatus = () => {
 export const useHandleChannelClick = () => {
   const setMessages = useMessageStore((state) => state.setMessages);
   const setCurrentChannelId = useMessageStore((state) => state.setCurrentChannelId);
+  const setCurrentDmUser = useMessageStore((state) => state.setCurrentDmUser);
+
 
   const handleChannelClick = async (channelId: string) => {
     try {
@@ -36,6 +38,7 @@ export const useHandleChannelClick = () => {
       if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       const messages = await response.json();
       setCurrentChannelId(channelId);
+      setCurrentDmUser(null); 
       setMessages(messages);
     } catch (error) {
       console.error("Error fetching channel messages:", error);
@@ -69,6 +72,8 @@ export const useHandleDmUserClick = () => {
   const setMessages = useMessageStore((state) => state.setMessages); 
   const user = useUserStore((state) => state.user);
   const setCurrentDmUser = useMessageStore((state) => state.setCurrentDmUser); 
+  const setCurrentChannelId = useMessageStore((state) => state.setCurrentChannelId ); 
+
 
   const handleDmUserClick = async (dmUser: DmUser) => { 
     if (!dmUser.username || !user) return;  
@@ -78,6 +83,7 @@ export const useHandleDmUserClick = () => {
       console.log("DM Messages:", dmMessages);
       setMessages(dmMessages); 
       setCurrentDmUser(dmUser.username)
+      setCurrentChannelId(null);
     } catch (error) {
       console.error("Error fetching DM messages:", error);
     }

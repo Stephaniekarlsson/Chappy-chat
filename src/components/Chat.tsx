@@ -32,22 +32,23 @@ export const Chat = () => {
 
 
 
-    const handleSend = async () => {
-      if (inputValue.trim()) {
-        setIsLoading(true); 
-        try {
-          if (currentDmUser) {
-            await handleSendDm(inputValue, setInputValue, currentUser, currentDmUser, setMessages);
-          } else if (currentChannelId) {
-            await handleSendChannelMessage(inputValue, setInputValue, currentUser, currentChannelId, setMessages);
-          }
-        } catch (error) {
-          console.error("Error sending message:", error);
-        } finally {
-          setIsLoading(false); 
-        }
+const handleSend = async () => {
+  if (inputValue.trim()) {
+    setIsLoading(true); 
+    try {
+      if (currentDmUser) {
+        await handleSendDm(inputValue, setInputValue, currentUser, currentDmUser, currentChannelId, setMessages); 
+      } else if (currentChannelId) {
+        await handleSendChannelMessage(inputValue, setInputValue, currentUser, currentChannelId, currentDmUser, setMessages); 
       }
-    };
+    } catch (error) {
+      console.error("Error sending message:", error);
+    } finally {
+      setIsLoading(false); 
+    }
+  }
+};
+
   
     const getUserInfo = (sender: string) => {
       const user = users.find(user => user.username === sender);

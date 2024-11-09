@@ -14,11 +14,11 @@ export interface Message {
 
 interface MessageState {
   messages: MessageType[];
-  currentChannelId: string; 
+  currentChannelId: string | null; 
   currentDmUser: string | null;
   addMessage: (message: Message) => void;
   setMessages: (messages: MessageType[]) => void;
-  setCurrentChannelId: (channelId: string) => void; 
+  setCurrentChannelId: (channelId: string | null) => void; 
   setCurrentDmUser: (username: string | null) => void;
 }
 

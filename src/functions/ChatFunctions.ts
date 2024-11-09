@@ -10,18 +10,21 @@ export const handleSendDm = async (
   setInputValue: React.Dispatch<React.SetStateAction<string>>,
   currentUser: string,
   currentDmUser: string | null,
+  currentChannelId: string | null, 
   setMessages: (messages: DmMessage[]) => void
 ) => {
-  if (!currentDmUser) {
-    console.error("No recipient selected for the DM.");
+  if (!currentDmUser || currentChannelId) { 
+    console.error("No recipient selected for the DM or channel is active.");
     return;
   }
+
   const newDmMessage: DmMessage = {
     sender: currentUser,
     receiver: currentDmUser,
     message: inputValue,
     timestamp: new Date(),
   };
+
   const response = await addDmMessage(newDmMessage);
   if (response) {
     setInputValue('');
@@ -30,15 +33,17 @@ export const handleSendDm = async (
   }
 };
 
+
 export const handleSendChannelMessage = async (
   inputValue: string,
   setInputValue: React.Dispatch<React.SetStateAction<string>>,
   currentUser: string,
   currentChannelId: string | null,
+  currentDmUser: string | null, 
   setMessages: (messages: Message[]) => void
 ) => {
-  if (!currentChannelId) {
-    console.error("No channel selected.");
+  if (!currentChannelId || currentDmUser) { 
+    console.error("No channel selected or DM chat is active.");
     return;
   }
 
@@ -56,3 +61,4 @@ export const handleSendChannelMessage = async (
     setMessages(updatedMessages);
   }
 };
+

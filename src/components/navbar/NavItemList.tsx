@@ -69,7 +69,7 @@ const openDmDialog = async () => {
           onClick={openDmDialog}>
             <p className="add-dm-p">New message</p>
             <TbMessageCircleUser  className="add-dm-icon"
-/>
+            />
           </div>
       )}
     <ul>

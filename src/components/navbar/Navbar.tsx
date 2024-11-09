@@ -14,7 +14,7 @@ import { filteredUsers } from '../../functions/userFunctions';
 export const Navbar = () => {
   const activeTab = useTabStore((state) => state.activeTab);
   const setIsAuthenticated = useUserStore((state) => state.setIsAuthenticated);
-  const data = useTabStore((state) => state.data);
+  // const data = useTabStore((state) => state.data);
   const setData = useTabStore((state) => state.setData);
   const user = useUserStore((state) => state.user);
   const [isOpen, setIsOpen] = useState<boolean>(true);
@@ -38,14 +38,14 @@ export const Navbar = () => {
 
   useEffect(() => {
     const loadData = async () => {
-      if (activeTab === "users" && data.length === 0 && user) {
+      if ((activeTab === "users" || activeTab === "dms") && user) {  
         const filteredData = await filteredUsers(user._id);
         setData(filteredData);
       }
     };
-
+  
     loadData();
-  }, [activeTab, data.length, setData, user]);
+  }, [activeTab, user, setData]);
 
   return (
     <>

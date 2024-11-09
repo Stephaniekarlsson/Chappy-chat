@@ -5,6 +5,7 @@ import { useChannelStore } from "../../data/channelStore";
 import { useHandleDmTabChange } from "../../functions/NavFunctions";
 import { filteredUsers } from "../../functions/userFunctions";
 import { useState } from "react";
+import { useMessageStore } from "../../data/messageStore";
 
 export const NavButtons = () => {
   const activeTab = useTabStore((state) => state.activeTab);
@@ -14,6 +15,8 @@ export const NavButtons = () => {
   const user = useUserStore((state) => state.user);
   const setUsers = useUserStore((state) => state.setUsers);
   const setChannels = useChannelStore((state) => state.setChannels);
+  const setMessages = useMessageStore((state) => state.setMessages);
+  const messages = useMessageStore((state) => state.messages);
   const { handleDmTabChange } = useHandleDmTabChange(); 
   const [isLoading, setIsLoading] = useState<string | null>(null);
 
@@ -21,6 +24,10 @@ export const NavButtons = () => {
   const handleTabChange = async (tab: "users" | "channels" | "dms") => {
     setActiveTab(tab);
     setIsLoading(tab); 
+
+    setMessages([]);
+    console.log('meddelanden', messages);
+    
 
     try {
       if (tab === "users") {
