@@ -5,16 +5,25 @@ import { useNavigate } from "react-router-dom";
 import { useUserStore } from "../../data/UserStore";
 import { useState } from "react";
 import { RegisterForm } from "./RegisterForm";
+import { fetchUsers } from '../../api/userApi';
+import { useTabStore } from '../../data/tabStore';
 
 export const LoginPage = () => {
   const setIsAuthenticated = useUserStore((state) => state.setIsAuthenticated);
   const navigate = useNavigate();
   const [registerMode, setRegisterMode] = useState(false)
   const setUser = useUserStore((state) => state.setUser);
+  const setUsers= useUserStore((state) => state.setUsers);
+  const setData = useTabStore((state) => state.setData);
 
-  const handleUseAsGuest = () => {
+
+  const handleUseAsGuest = async () => {
     setIsAuthenticated(false);
     setUser(null)
+    const userList = await fetchUsers(); 
+    localStorage.setItem("users", JSON.stringify(userList));
+    setUsers(userList);
+    setData(userList)
     navigate("/guest");
   };
 

@@ -50,6 +50,7 @@ export function SignInForm() {
       setIsAuthenticated(true);
       setUser(userData);
       const filteredData = await filteredUsers(data._id ?? '');
+      localStorage.setItem('users', JSON.stringify(filteredData));
       setUsers(filteredData);
       setData(filteredData);
       setUsername('');

@@ -6,6 +6,7 @@ import { useHandleDmTabChange } from "../../functions/NavFunctions";
 import { filteredUsers } from "../../functions/userFunctions";
 import { useState } from "react";
 import { useMessageStore } from "../../data/messageStore";
+import { fetchUsers } from "../../api/userApi";
 
 export const NavButtons = () => {
   const activeTab = useTabStore((state) => state.activeTab);
@@ -16,41 +17,41 @@ export const NavButtons = () => {
   const setUsers = useUserStore((state) => state.setUsers);
   const setChannels = useChannelStore((state) => state.setChannels);
   const setMessages = useMessageStore((state) => state.setMessages);
-  const messages = useMessageStore((state) => state.messages);
   const { handleDmTabChange } = useHandleDmTabChange(); 
   const [isLoading, setIsLoading] = useState<string | null>(null);
 
 
   const handleTabChange = async (tab: "users" | "channels" | "dms") => {
     setActiveTab(tab);
-    setIsLoading(tab); 
-
+    setIsLoading(tab);
     setMessages([]);
-    console.log('meddelanden', messages);
-    
-
+  
     try {
       if (tab === "users") {
-        if (user) {
+        if (isAuthenticated && user) {
+
           const users = await filteredUsers(user._id); 
           setUsers(users);
           setData(users);
+        } else {
+          const allUsers = await fetchUsers(); 
+          setUsers(allUsers);
+          setData(allUsers);
         }
       } else if (tab === "channels") {
         const channels = await fetchChannels();
         setChannels(channels);
         setData(channels);
-          if (user) {  
-            const users = await filteredUsers(user._id);
-            setUsers(users);
-          }
+  
+        if (isAuthenticated && user) {  
+          const users = await filteredUsers(user._id);
+          setUsers(users);
+        }
       } else if (tab === "dms") {
-        if (user) {
+        if (isAuthenticated && user) {
           await handleDmTabChange(); 
-          if (user) {  
-            const users = await filteredUsers(user._id);
-            setUsers(users);
-          }
+          const users = await filteredUsers(user._id);
+          setUsers(users);
         }
       }
     } catch (error) {
@@ -59,6 +60,7 @@ export const NavButtons = () => {
       setIsLoading(null); 
     }
   };
+  
 
   return (
     <div className="nav-btns">

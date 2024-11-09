@@ -5,13 +5,21 @@ import { useUserStore } from "./data/UserStore";
 
 function App() {
   const setIsAuthenticated = useUserStore((state) => state.setIsAuthenticated);
+  const setUsers = useUserStore((state) => state.setUsers);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+    const usersData = localStorage.getItem('users');
+    
+    if (usersData) {
+      setUsers(JSON.parse(usersData)); 
+    }
     if (token) {
       setIsAuthenticated(true);
     }
-  }, [setIsAuthenticated]);
+
+
+  }, [setIsAuthenticated, setUsers]);
 
   return <Outlet />;
 }
