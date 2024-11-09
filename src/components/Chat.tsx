@@ -75,7 +75,7 @@ const handleSend = async () => {
 
             return (
             <div 
-              key={isChannelMessage ? msg._id : `${msg.sender}-${msg.receiver}-${msg.message}`} 
+              key={isChannelMessage ? msg._id : `${msg.sender}-${msg.receiver}-${msg.timestamp}`} 
               className="message-wrapper"
             >
               <div className="message-info">

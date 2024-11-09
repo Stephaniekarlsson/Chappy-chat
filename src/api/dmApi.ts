@@ -59,3 +59,22 @@ export const addDmMessage = async (newMessage: DmMessage) => {
   }
 };
 
+export const deleteUserDmMessages = async (username: string): Promise<void> => {
+  
+  try {
+   
+    const response = await fetch(`/api/direct-messages/username/${username}`, {
+      method: 'DELETE',
+    });
+
+    if (!response.ok) {
+      const errorDetails = await response.text();
+      throw new Error(`Failed to delete DM messages: ${errorDetails}`);
+    }
+
+    console.log('DM messages deleted successfully');
+
+  } catch (error) {
+    console.error('Error deleting DM messages:', error);
+  }
+};

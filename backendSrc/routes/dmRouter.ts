@@ -79,21 +79,26 @@ router.post('/', async (req: Request, res: Response) => {
   }
 });
 
-router.delete('/sender/:sender', async (req: Request, res: Response) => {
-  const { sender } = req.params;
+router.delete('/username/:username', async (req: Request, res: Response) => {
+  const { username } = req.params;
 
   try {
     const collection = await getDmMessagesCollection();
 
     const deleteResult = await collection.deleteMany({
-      sender: sender,  
+      $or: [
+        { sender: username },
+        { receiver: username }
+      ]
     });
 
     if (deleteResult.deletedCount === 0) {
       res.status(404).send({ error: 'No messages found from sender' });
+      return
     }
 
-    res.status(200).send({ message: `All messages from ${sender} deleted successfully` });
+    res.status(200).send({ message: `All messages from ${username} deleted successfully` });
+    return
 
   } catch (error) {
     console.error('Error deleting DM messages:', error);

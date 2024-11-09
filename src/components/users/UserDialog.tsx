@@ -2,12 +2,12 @@ import '../../css/userDialog.css'
 import { useUserStore } from "../../data/UserStore";
 import { FaUserEdit } from "react-icons/fa";
 import { AiOutlinePlus } from "react-icons/ai";
-import { deleteUser, updateUser } from "../../api/userApi";
+import { updateUser } from "../../api/userApi";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { User } from "../../api/userApi";
 import { useTabStore } from "../../data/tabStore";
-import { filteredUsers } from '../../functions/userFunctions';
+import { filteredUsers, useDeleteUserWithMessages } from '../../functions/userFunctions';
 
 interface UserDialogProps {
   closeDialog: () => void;
@@ -29,12 +29,13 @@ export const CreateUserDialog: React.FC<UserDialogProps> = ({
   const [isEditingImage, setIsEditingImage] = useState(false);
   const [username, setUsername] = useState(user?.username || "");
   const [image, setImage] = useState(user?.image || "");
+  const { deleteUserWithMessages } = useDeleteUserWithMessages();
 
   if (!user) return null;
 
   const handleDelete = async () => {
     try {
-      await deleteUser(user._id);
+      await deleteUserWithMessages(user._id, user.username)
       setMessage("Account deleted");
       localStorage.removeItem("token");
       localStorage.removeItem("user");
