@@ -64,6 +64,16 @@ const openDmDialog = async () => {
 
   return (
     <>
+
+        {activeTab === 'channels' && isAuthenticated && (
+          <div className="channel-icon-container"
+          onClick={openDialog}>
+            <p className="add-channel-p">Create channel</p>
+            <AiOutlinePlus  className="add-channel-icon"
+            />
+          </div>
+        )}
+
         {activeTab === 'dms' && isAuthenticated && (
           <div className="dm-icon-container"
           onClick={openDmDialog}>
@@ -71,7 +81,7 @@ const openDmDialog = async () => {
             <TbMessageCircleUser  className="add-dm-icon"
             />
           </div>
-      )}
+        )}
     <ul>
       {data.map((item) => (
         <li
@@ -103,12 +113,6 @@ const openDmDialog = async () => {
       </li>
       ))}
     </ul>
-      {activeTab === 'channels' && isAuthenticated && (
-        <button className="add-channel-btn"
-        onClick={openDialog}>
-          <AiOutlinePlus className="add-channel-icon"/>
-        </button>
-      )}
 
       {isDialogOpen && (
         <CreateChannelDialog closeDialog={closeDialog}/>

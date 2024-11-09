@@ -149,14 +149,14 @@ margin-top: 1em;
     color: var(--white-transp);
 }
 
-.item-image, .item-row > img, .add-channel-btn {
+.item-image, .item-row > img {
   width: 38px;
   height: 38px;
   border-radius: 50%;
   border: 2px solid var(--blue);  
 }
 
-.dm-icon-container {
+.dm-icon-container, .channel-icon-container {
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -164,10 +164,14 @@ margin-top: 1em;
   margin: .5em .2em -.5em;
 }
 
-.add-dm-icon, .add-dm-p {
+.add-dm-icon, .add-dm-p, .add-channel-p, .add-channel-icon  {
   color: var(--white-transp);
 }
 
 .add-dm-icon {
   font-size: 1.5em;
+}
+
+.add-channel-icon {
+  font-size: 1em;
 }
