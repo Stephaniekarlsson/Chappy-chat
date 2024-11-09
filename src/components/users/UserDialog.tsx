@@ -41,6 +41,7 @@ export const CreateUserDialog: React.FC<UserDialogProps> = ({
       localStorage.removeItem("user");
       setIsAuthenticated(false);
       setUser(null);
+      setMessage(null)
 
       setTimeout(() => {
         navigate("/");

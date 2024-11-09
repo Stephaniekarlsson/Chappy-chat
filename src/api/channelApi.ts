@@ -93,3 +93,29 @@ export const createChannel = async (newChannel: NewChannel) => {
     throw error;
   }
 };
+
+
+export const deleteUserChannelMessages = async (channelId: string, username: string): Promise<boolean> => {
+  try {
+    const response = await fetch(`/api/channels/${channelId}/messages/${username}`, {
+      method: 'DELETE',
+    });
+
+    if (response.ok) {
+      const responseData = await response.json();
+      if (responseData.deletedCount === 0) {
+        console.log('No channel messages found for user');
+        return false;  
+      }
+      console.log('Channel messages deleted successfully');
+      return true;  
+    } else {
+      const errorDetails = await response.text();
+      throw new Error(`Failed to delete channel messages: ${errorDetails}`);
+    }
+  } catch (error) {
+    console.error('Error deleting channel messages:', error);
+    return false; 
+  }
+};
+

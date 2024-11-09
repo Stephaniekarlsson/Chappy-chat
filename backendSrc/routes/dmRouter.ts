@@ -93,11 +93,11 @@ router.delete('/username/:username', async (req: Request, res: Response) => {
     });
 
     if (deleteResult.deletedCount === 0) {
-      res.status(404).send({ error: 'No messages found from sender' });
+      res.status(200).send({ message: 'No messages found from ${username}' });
       return
     }
 
-    res.status(200).send({ message: `All messages from ${username} deleted successfully` });
+    res.status(200).send({ message: 'All messages from ${username} deleted successfully' });
     return
 
   } catch (error) {

@@ -182,7 +182,7 @@ router.delete('/:channelId/messages/:sender', async (req: Request, res: Response
         });
 
         if (deleteResult.deletedCount === 0) {
-            res.status(404).send({ error: 'No messages found to delete' });
+            res.status(200).send({ message: 'No messages found to delete from ${username}' });
             return;
         }
 
