@@ -3,8 +3,9 @@ import { User } from "../api/userApi";
 import { useUserStore } from "../data/UserStore";
 import { deleteUser } from "../api/userApi";
 import { deleteUserDmMessages } from "../api/dmApi";
-import { deleteUserChannelMessages } from "../api/channelApi";
-import { useMessageStore } from "../data/messageStore";
+import { deleteUserChannelMessages, fetchChannels, fetchChannelMessages } from "../api/channelApi";
+
+
 
 export const filteredUsers = async (userId: string) => {
   const fetchedUsers = await fetchUsers();
@@ -31,7 +32,6 @@ export const getDmUserInfo = (username: string) => {
 
 export const useDeleteUserWithMessages = () => {
   const user = useUserStore((state) => state.user);
-  const currentChannelId = useMessageStore((state) => state.currentChannelId);
 
   const deleteUserWithMessages = async (_id: string, username: string): Promise<void> => {
     if (!user) {
@@ -40,28 +40,22 @@ export const useDeleteUserWithMessages = () => {
     }
 
     try {
- 
-      const dmDeleted = await deleteUserDmMessages(username);
-      if (dmDeleted) {
-        console.log('DM messages deleted successfully');
-      } else {
-        console.log('No DM messages to delete for user');
-      }
+      
+      await deleteUserDmMessages(username);
+      
+      const allChannels = await fetchChannels();
 
-      if (currentChannelId) {
-        const channelDeleted = await deleteUserChannelMessages(currentChannelId, username);
-        if (channelDeleted) {
-          console.log('Channel messages deleted successfully');
-        } else {
-          console.log('No channel messages to delete for user');
+      for (const channel of allChannels) {
+        const channelMessages = await fetchChannelMessages(channel._id);
+        const userMessages = channelMessages.filter(msg => msg.sender === username);
+
+        if (userMessages.length > 0) {
+          await deleteUserChannelMessages(channel._id, username);
         }
-      } else {
-        console.log('No channel selected; nothing to delete');
       }
 
       await deleteUser(_id);
-      console.log('User deleted successfully');
-      
+
     } catch (error) {
       console.error('Error deleting user and messages:', error);
     }
@@ -69,4 +63,5 @@ export const useDeleteUserWithMessages = () => {
 
   return { deleteUserWithMessages };
 };
+
 

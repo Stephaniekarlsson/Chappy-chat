@@ -1,6 +1,6 @@
 
 export type Channel = { 
-  _id: number;
+  _id: string;
   channel_name: string; 
   image: string 
   isLocked: boolean};
