@@ -25,6 +25,8 @@ export function SignInForm() {
   const setUser = useUserStore((state) => state.setUser);
   const setData = useTabStore((state) => state.setData);
   const setUsers = useUserStore((state) => state.setUsers);
+  const setActiveTab = useTabStore((state) => state.setActiveTab);
+
 
   const navigate = useNavigate();
 
@@ -53,6 +55,7 @@ export function SignInForm() {
       localStorage.setItem('users', JSON.stringify(filteredData));
       setUsers(filteredData);
       setData(filteredData);
+      setActiveTab('users')
       setUsername('');
       setPassword('');
       navigate('/guest');

@@ -29,11 +29,13 @@ export const CreateUserDialog: React.FC<UserDialogProps> = ({
   const [isEditingImage, setIsEditingImage] = useState(false);
   const [username, setUsername] = useState(user?.username || "");
   const [image, setImage] = useState(user?.image || "");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { deleteUserWithMessages } = useDeleteUserWithMessages();
 
   if (!user) return null;
 
   const handleDelete = async () => {
+    setIsLoading(true)
     try {
       await deleteUserWithMessages(user._id, user.username)
       setMessage("Account deleted");
@@ -49,7 +51,9 @@ export const CreateUserDialog: React.FC<UserDialogProps> = ({
     } catch (error) {
       setError("Failed to delete user. Please try again.");
       console.error("Error deleting user:", error);
-    }
+    } finally {
+      setIsLoading(false)
+    } 
   };
 
   const handleWantDelete = () => {
@@ -132,6 +136,7 @@ export const CreateUserDialog: React.FC<UserDialogProps> = ({
 
         {error && <p className="dialog-message">{error}</p>}
         {message && <p className="dialog-message">{message}</p>}
+        {isLoading && <div className="loading-spinner">Loading...</div>}
         <div className="user-dialog-btn-container">
           <button className="user-display-btn" onClick={handleWantDelete}>
             Delete account
