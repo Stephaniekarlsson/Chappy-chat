@@ -10,7 +10,7 @@ export type ChannelMessage = {
   channel_id: string; 
   sender: string;
   message: string;
-  timestamp: Date;
+  timestamp: string;
 };
 
 export type NewMessage = {

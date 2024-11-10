@@ -101,9 +101,10 @@ margin-top: 1em;
     flex-direction: column;
     gap: 1em;
     max-height: 79vh;
-    overflow: scroll;
+    overflow-y: auto;
+    scrollbar-width: none;
 }
-
+ 
 .item-row {
   display: flex;
   align-items: center;

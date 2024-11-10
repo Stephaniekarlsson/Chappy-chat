@@ -5,10 +5,10 @@ import { useMessageStore } from '../data/messageStore';
 import { useUserStore } from '../data/UserStore';
 import { Message } from '../data/messageStore'
 import { DmMessage } from '../api/dmApi';
-
 import { handleSendDm } from '../functions/ChatFunctions';
 import { handleSendChannelMessage } from '../functions/ChatFunctions';
 import { BsSendSlash } from "react-icons/bs";
+import owl_img from '../assets/hi_owl3.png';
 
 export const Chat = () => {
 
@@ -83,54 +83,62 @@ const handleSend = async () => {
 
   return (
     <>
-    <section className='chat-section'>
-      <div className='messages-container'>
-        {filteredMessages.length > 0 ? (
-          filteredMessages.map((msg) => {
-            const isChannelMessage = 'channel_id' in msg;
-
-            return (
-            <div 
-              key={isChannelMessage ? msg._id : `${msg.sender}-${msg.receiver}-${msg.timestamp}`} 
-              className="message-wrapper"
-            >
-              <div className="message-info">
-                {msg.sender !== currentUser && (
-                  <>
-                    <img src={getUserInfo(msg.sender).image} alt='' className="profile-image" />
-                    <p className="username">{getUserInfo(msg.sender).username}</p>
-                  </>
-                )}
+      <section className='chat-section'>
+        {(currentChannelId || currentDmUser) ? (
+          <div className='messages-container'>
+            {filteredMessages.length > 0 ? (
+              filteredMessages.map((msg) => {
+                const isChannelMessage = 'channel_id' in msg;
+  
+                return (
+                  <div 
+                    key={isChannelMessage ? msg._id : `${msg.sender}-${msg.receiver}-${msg.timestamp}`} 
+                    className="message-wrapper"
+                  >
+                    <div className="message-info">
+                      {msg.sender !== currentUser && (
+                        <>
+                          <img src={getUserInfo(msg.sender).image} alt='' className="profile-image" />
+                          <p className="username">{getUserInfo(msg.sender).username}</p>
+                        </>
+                      )}
+                    </div>
+                    <div className={`message ${msg.sender === currentUser ? 'self' : 'other'}`}>
+                      {msg.message}
+                    </div>
+                    <div className={`message-timestamp ${msg.sender === currentUser ? 'self' : 'other'}`}>
+                      {timeStamp(msg.timestamp)} 
+                    </div>              
+                  </div>
+                );
+              })
+            ) : (
+              <div className="empty-chat-container">
+                <p className='empty-chat-message'>Start chat</p>
+                <img src={owl_img} alt="owl image" className='empty-chat-img'/>
               </div>
-              <div className={`message ${msg.sender === currentUser ? 'self' : 'other'}`}>
-                {msg.message}
-              </div>
-              <div className={`message-timestamp ${msg.sender === currentUser ? 'self' : 'other'}`}>
-                    {timeStamp(msg.timestamp)} 
-                  </div>              
-            </div>
-          );
-        })
-      ) : (
-        <p>There's no messages for this channel yet.</p>
-      )}
-      <div ref={endOfMessagesRef} />
-    </div>
-
-      <div className='input-container'>
-        <input
-          type='text'
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          onKeyDown={handlePressEnter}
-          placeholder='Write a message...'
-        />
-        <button onClick={handleSend}
-        disabled={isLoading}>
-          {isLoading ? <BsSendSlash className='send-icon' /> : <LuSendHorizonal className='send-icon' />}
-          </button>
-      </div>
-    </section>
+            )}
+            <div ref={endOfMessagesRef} />
+          </div>
+        ) : null}
+  
+        {(currentChannelId || currentDmUser) && (
+          <div className='input-container'>
+            <input
+              type='text'
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              onKeyDown={handlePressEnter}
+              placeholder='Write a message...'
+            />
+            <button onClick={handleSend} disabled={isLoading}>
+              {isLoading ? <BsSendSlash className='send-icon' /> : <LuSendHorizonal className='send-icon' />}
+            </button>
+          </div>
+        )}
+      </section>
     </>
-);
+  );
+  
+  
 } 

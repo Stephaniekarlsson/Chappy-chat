@@ -30,7 +30,8 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   text-align: center;
   max-height: 90vh;
-  overflow: scroll;
+  overflow-y: auto;
+  scrollbar-width: none;
 }
 
 .new-dm-dialog h2 {

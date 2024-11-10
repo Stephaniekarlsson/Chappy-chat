@@ -22,7 +22,7 @@ export const handleSendDm = async (
     sender: currentUser,
     receiver: currentDmUser,
     message: inputValue,
-    timestamp: new Date(),
+    timestamp: new Date().toISOString(),
   };
 
   const response = await addDmMessage(newDmMessage);
@@ -51,6 +51,7 @@ export const handleSendChannelMessage = async (
     sender: currentUser,
     message: inputValue,
     channel_id: currentChannelId,
+    timestamp: new Date().toISOString(),
   };
 
   const response = await addChannelMessage(newChannelMessage);
