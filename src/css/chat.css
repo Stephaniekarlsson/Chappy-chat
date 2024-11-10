@@ -94,3 +94,11 @@
 .send-icon {
   font-size: 1.2em;
 }
+
+.message-timestamp {
+  font-size: .6em; 
+  color: var(--white-transp);
+  margin-top: -5px; 
+  background-color: transparent;
+}
+

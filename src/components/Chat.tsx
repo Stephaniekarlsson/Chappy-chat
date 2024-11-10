@@ -48,7 +48,6 @@ const handleSend = async () => {
     }
   }
 };
-
   
     const getUserInfo = (sender: string) => {
       const user = users.find(user => user.username === sender);
@@ -64,6 +63,23 @@ const handleSend = async () => {
       handleSend();
     }
   };
+
+  const timeStamp = (timestamp: string | undefined) => {
+    if (!timestamp) return '';
+  
+    const date = new Date(timestamp);
+  
+    const day = date.getDate(); 
+    const month = date.toLocaleString('default', { month: 'short' }); 
+    const year = date.getFullYear(); 
+    const hours = date.getHours(); 
+    const minutes = date.getMinutes(); 
+  
+    const formatMinutes = minutes < 10 ? `0${minutes}` : minutes;
+  
+    return `${day} ${month} ${year}, ${hours}:${formatMinutes}`;
+  };
+  
 
   return (
     <>
@@ -89,6 +105,9 @@ const handleSend = async () => {
               <div className={`message ${msg.sender === currentUser ? 'self' : 'other'}`}>
                 {msg.message}
               </div>
+              <div className={`message-timestamp ${msg.sender === currentUser ? 'self' : 'other'}`}>
+                    {timeStamp(msg.timestamp)} 
+                  </div>              
             </div>
           );
         })

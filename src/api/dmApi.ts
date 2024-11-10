@@ -7,7 +7,7 @@ export type DmMessage = {
   sender: string;
   receiver: string
   message: string;
-  timestamp: Date;
+  timestamp: string;
 };
  
 export const fetchDmMessages = async (receiver: string, sender: string): Promise<DmMessage[]> => {

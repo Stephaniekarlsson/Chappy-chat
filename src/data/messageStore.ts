@@ -10,6 +10,7 @@ export interface Message {
   sender: string;
   username?: string; 
   img?: string; 
+  timestamp?: string;
 }
 
 interface MessageState {
