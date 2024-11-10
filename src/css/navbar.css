@@ -104,13 +104,14 @@ margin-top: 1em;
     overflow-y: auto;
     scrollbar-width: none;
 }
- 
+
 .item-row {
   display: flex;
   align-items: center;
   gap: 10px; 
   padding: 5px 0;
   transition: opacity 0.3s;
+  cursor: pointer;
 }
 
 .item-row.locked {
